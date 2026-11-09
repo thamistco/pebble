@@ -14,7 +14,7 @@ pl: Jeszcze raz? (Again?)
 ## Sroczka kaszkę warzyła
 18-48 | 5 | low | indoors,bedtime,onthego | None | cl,pse,math | polish
 - Hold their hand palm up and stir little circles in it with one finger.
-- On each "temu dała" hold or wiggle one finger, starting from the little finger.
+- On each "temu dała" hold or wiggle one finger, starting from the thumb, so the little finger is the one left with nothing.
 - On "frrr!" fly your hand away like a bird, or up to tickle under their arm.
 - Do the other hand too.
 words: Sroczka kaszkę warzyła, / dzieci swoje karmiła. / Temu dała na łyżeczce, / temu dała na miseczce, / temu dała na spodeczku, / temu dała w garnuszeczku, / a dla tego nic nie miała, / frrr! po więcej poleciała.
@@ -42,7 +42,7 @@ pl: pajączek, deszcz, słoneczko (spider, rain, sun)
 - Sing it slowly, blinking your eyes on "mruga".
 - Climb two fingers up their arm like a kitten on a fence.
 - On "jeszcze raz" (once more), sing it again, faster or as a whisper.
-words: Wlazł kotek na płotek i mruga, / ładna to piosenka, niedługa. / Niedługa, nie krótka, lecz w sam raz, / zaśpiewaj, koteczku, jeszcze raz.
+words: Wlazł kotek na płotek i mruga, / ładna to piosenka, niedługa. / Niedługa, niekrótka, lecz w sam raz, / zaśpiewaj, koteczku, jeszcze raz.
 en: A kitten climbed the fence and blinks. It's a pretty song, not long. Not long, not short, but just right. Sing it, kitten, once more.
 why: A short, repetitive tune with an action is perfect for joining in with first words.
 easier: Just blink and sing the first line.
@@ -118,7 +118,7 @@ pl: Bęc! (Bump!)
 - Sing the lullaby softly, a little slower each time.
 - Stroke their hair or back in time with the tune.
 words: Aaa, kotki dwa, / szarobure obydwa. / Nic nie będą robiły, / tylko ciebie bawiły.
-en: Hush, two little kittens, both grey and brown. They won't do anything except play with you.
+en: Hush, two little kittens, both greyish-brown. They won't do anything except play with you.
 why: A familiar lullaby in the home language is a strong sleep cue and a bit of family history.
 easier: Just hum it.
 harder: Add more verses you know, or let them sing to teddy.
@@ -196,7 +196,7 @@ en: Sycamore people, what are you doing here? We're building bridges for the may
 why: Anticipation games like this build trust and lots of laughs; the "catch" is always a cuddle.
 easier: One grown-up makes an arch against a wall or sofa.
 harder: Add siblings and take turns being the bridge.
-pl: Złapany! (Caught!)
+pl: Mam cię! (Got you!)
 
 ## Idzie pani: tup, tup, tup
 18-48 | 5 | low | bedtime,indoors | None | pse,cl | polish

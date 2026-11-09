@@ -131,7 +131,7 @@ why: Matching and sorting are the start of maths thinking.
 easier: Sort into two piles: big and little.
 harder: Sort by colour, then count each pile.
 pl: duży, mały (big, small)
-plp: Gdzie jest para? (Where is the pair?)
+plp: Gdzie jest druga skarpetka? (Where is the other sock?)
 
 ## Shadow animals
 24-48 | 10 | low | bedtime | A torch or phone light | ead,utw,cl |
@@ -197,7 +197,7 @@ plp: Rośniemy jak drzewo! (We are growing like a tree!)
 ## Blanket fort story
 24-48 | 30 | low | indoors | Blanket, chairs or sofa cushions, a torch, books | lit,ead,pse | rainy,weekend
 - Build a den together with a blanket over chairs.
-- Take in a torch, a teddy and two books.
+- Take in a torch (battery cover screwed shut), a teddy and two books.
 - Read in the den by torchlight.
 - Make up a story about who lives in the den.
 why: A special reading place makes books feel like an adventure.

@@ -45,7 +45,7 @@ plp: Idziemy jak słoń: tup, tup! (Walk like an elephant: stomp, stomp!)
 why: Jumping with both feet is a skill most children reach around 2 and a half.
 easier: Step from pad to pad, holding your hand.
 harder: Count the jumps as you go.
-safety: Use tea towels only on carpet, not slippery floors.
+safety: Use cushions, or tea towels on carpet only: paper and towels slide on hard floors.
 pl: żabka, skacz (frog, jump)
 plp: Skacz jak żabka! (Jump like a frog!)
 
@@ -146,7 +146,7 @@ plp: Słyszysz morze? (Can you hear the sea?)
 why: Sorting by size and colour is early maths, and the beach is a free maths kit.
 easier: Just find "big" and "little".
 harder: Find pebbles that match a colour you name.
-safety: Under 3s: only pebbles bigger than their fist, and supervise mouthing.
+safety: Under 3s: only pebbles bigger than their fist, and supervise mouthing. In summer, sun hat and sun cream.
 pl: kamień (stone)
 plp: Duży czy mały kamień? (Big or small stone?)
 
@@ -159,7 +159,7 @@ plp: Duży czy mały kamień? (Big or small stone?)
 why: Stacking takes careful hand control and lots of tries.
 easier: Two-pebble towers.
 harder: Who can build taller? Take turns adding one.
-safety: Large pebbles only for under 3s.
+safety: Large pebbles only for under 3s. In summer, sun hat and sun cream.
 pl: wieża, kamień (tower, stone)
 plp: Jeszcze jeden kamień! (One more stone!)
 
@@ -172,7 +172,7 @@ plp: Jeszcze jeden kamień! (One more stone!)
 why: Big laughter and a bit of thrill, safely shared, builds trust.
 easier: Watch from further back and shout "here it comes!"
 harder: Count the waves.
-safety: Hold hands the whole time. Only on calm days, never alone near the sea.
+safety: Hold hands the whole time. Only on calm days, never alone near the sea. Sun hat and sun cream in summer.
 pl: fala, morze (wave, sea)
 plp: Uciekamy przed falą! (Run from the wave!)
 
@@ -213,7 +213,7 @@ plp: Mamy już piórko! (We have a feather!)
 
 ## Chalk drawing
 24-48 | 20 | med | outdoors | Chalk (optional) | ead,pd | summer
-- Draw on the pavement or path outside your door.
+- Draw on a path, patio or playground away from traffic.
 - Draw a line and see if they copy it.
 - Then try a circle.
 - Draw round their shadow or their feet.
@@ -245,7 +245,7 @@ plp: Maluj wodą! (Paint with water!)
 why: Digging is real-world science and great for little muscles.
 easier: Fill and empty a pot.
 harder: Plant a seed or bulb together and water it.
-safety: Wash hands afterwards.
+safety: Check the soil for animal mess first, and wash hands afterwards.
 pl: ziemia, łopatka (soil, spade)
 plp: Kopiemy dołek! (We are digging a hole!)
 

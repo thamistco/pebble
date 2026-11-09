@@ -5,7 +5,7 @@ const DATA = window.PEBBLE_DATA;
 const ACTS = DATA.activities;
 const BY_ID = Object.fromEntries(ACTS.map(a=>[a.id,a]));
 const KEY = 'pebble.v1';
-const VERSION = '2.0.0';
+const VERSION = '2.1.0';
 
 /* ---------- Icons (inline SVG, 24px grid, stroke) ---------- */
 const P = {
@@ -79,11 +79,39 @@ const SEASON_I = {winter:'snow',spring:'flower',summer:'sun',autumn:'leaf'}[SEAS
 
 /* ---------- Store ---------- */
 const DEFAULTS = { settings:{child:'', birth:'', parents:['',''], allAges:false, polish:false, theme:'system', goal:20, onboarded:false}, favs:[], log:[], shuffle:{date:'',n:0}, prompt:{date:'',n:0}, hints:{ios:false} };
+const clone = o => JSON.parse(JSON.stringify(o));
+const isDate = v => typeof v==='string' && /^\d{4}-\d\d-\d\d$/.test(v) && !isNaN(Date.parse(v+'T00:00:00Z')) && new Date(v+'T00:00:00Z').toISOString().slice(0,10)===v;
+const str = (v,max) => (typeof v==='string'?v:(typeof v==='number'?String(v):'')).slice(0,max);
+/* Normalise anything (old versions, hand-edited or corrupted storage, imported files) into a valid state */
+function normalize(raw){
+  const d = clone(DEFAULTS); if(!raw || typeof raw!=='object' || Array.isArray(raw)) return d;
+  const rs = (raw.settings && typeof raw.settings==='object') ? raw.settings : {}; const s=d.settings;
+  s.child = str(rs.child,30).trim(); s.birth = isDate(rs.birth) ? rs.birth : '';
+  const ps = Array.isArray(rs.parents) ? rs.parents : (typeof rs.parents==='string' ? [rs.parents] : []);
+  s.parents = [str(ps[0],30).trim(), str(ps[1],30).trim()];
+  s.allAges = rs.allAges===true; s.polish = rs.polish===true; s.onboarded = rs.onboarded===true;
+  s.theme = ['system','light','dark'].includes(rs.theme) ? rs.theme : 'system';
+  s.goal = [10,20,30].includes(+rs.goal) ? +rs.goal : 20;
+  d.favs = Array.isArray(raw.favs) ? [...new Set(raw.favs.filter(id=>typeof id==='string' && BY_ID[id]))] : [];
+  const seen = new Set();
+  d.log = (Array.isArray(raw.log) ? raw.log : []).filter(e=>e && typeof e==='object' && BY_ID[e.a] && isDate(e.d)).map((e,i)=>{
+    let id = str(e.id,40) || ('m'+i+'x'+e.d.replace(/-/g,'')); while(seen.has(id)) id += 'x'; seen.add(id);
+    const min = Math.round(+e.min); const ts = (typeof e.ts==='string' && !isNaN(Date.parse(e.ts))) ? e.ts : e.d+'T12:00:00.000Z';
+    return {id, a:e.a, d:e.d, ts, min: (min>0 && min<=600) ? min : BY_ID[e.a].m, who: str(e.who,40), note: str(e.note,140)};
+  });
+  const day = o => (o && typeof o==='object' && typeof o.date==='string' && Number.isInteger(o.n) && o.n>=0) ? {date:o.date, n:o.n} : {date:'', n:0};
+  d.shuffle = day(raw.shuffle); d.prompt = day(raw.prompt);
+  d.hints = {ios: !!(raw.hints && raw.hints.ios)};
+  return d;
+}
 let S = load();
 function load(){
-  try{ const raw = JSON.parse(localStorage.getItem(KEY)||'null'); if(!raw) return structuredClone(DEFAULTS);
-    return {...structuredClone(DEFAULTS), ...raw, settings:{...DEFAULTS.settings, ...(raw.settings||{})}}; }
-  catch(e){ return structuredClone(DEFAULTS); }
+  let txt=null; try{ txt = localStorage.getItem(KEY); }catch(e){}
+  if(!txt) return clone(DEFAULTS);
+  let raw; try{ raw = JSON.parse(txt); }catch(e){ try{ localStorage.setItem(KEY+'.unreadable', txt); }catch(_){} raw = null; }
+  const st = normalize(raw);
+  try{ const out=JSON.stringify(st); if(out!==txt) localStorage.setItem(KEY, out); }catch(e){}
+  return st;
 }
 function save(){ try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){ toast('Could not save on this device'); } }
 
@@ -100,15 +128,17 @@ const childName = () => S.settings.child.trim() || 'your little one';
 const fill = s => esc(s).replace(/\{name\}/g, esc(S.settings.child.trim()||'Baby'));
 function ageMonths(){ const b=S.settings.birth; if(!b) return null; const bd=parseD(b), n=new Date();
   let m=(n.getFullYear()-bd.getFullYear())*12+(n.getMonth()-bd.getMonth()); if(n.getDate()<bd.getDate()) m--; return m; }
-function ageLabel(m){ if(m==null) return ''; if(m<0) return 'not born yet'; if(m<24) return `${m} months`; const y=Math.floor(m/12), r=m%12; return `${y} year${y>1?'s':''}${r?` ${r} month${r>1?'s':''}`:''}`; }
+function ageLabel(m){ if(m==null) return ''; if(m<0) return 'not born yet'; if(m<1) return 'newborn'; if(m<24) return `${m} months`; const y=Math.floor(m/12), r=m%12; return `${y} year${y>1?'s':''}${r?` ${r} month${r>1?'s':''}`:''}`; }
 function greeting(){ const h=new Date().getHours(); return h<12?'Good morning':h<18?'Good afternoon':'Good evening'; }
 function lastDone(id){ let best=null; for(const e of S.log){ if(e.a===id && (!best||e.d>best)) best=e.d; } return best; }
 function timesDone(id){ return S.log.filter(e=>e.a===id).length; }
 let toastT; function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2600); }
 
 /* ---------- Eligibility & picks ---------- */
+const MIN_AGE=18, MAX_AGE=48;
 function eligible(){
-  const m = ageMonths(); const s=S.settings;
+  let m = ageMonths(); const s=S.settings;
+  if(m!=null) m = Math.min(Math.max(m, MIN_AGE), MAX_AGE);   /* under 18 months: gentlest ideas; over 4: the 3-4 year ideas */
   return ACTS.filter(a=>{
     if(a.tags.includes('polish') && !s.polish) return false;
     if(s.allAges || m==null) return true;
@@ -187,7 +217,7 @@ function cardHTML(a){
 }
 
 /* ---------- Router / tabs ---------- */
-let tab = 'today';
+let tab = 'today'; let renderedDay = '';
 const ui = { quick:null, search:'', coll:null, f:{time:[],energy:[],place:[],area:[]} };
 function setTab(t, push=true){
   tab=t;
@@ -196,7 +226,7 @@ function setTab(t, push=true){
   render(); window.scrollTo(0,0);
 }
 function render(){
-  const m = $('#main');
+  renderedDay = dkey(); const m = $('#main');
   document.querySelector('.tabbar').hidden = !S.settings.onboarded;
   if(!S.settings.onboarded){ m.innerHTML = welcomeHTML(); return; }
   m.innerHTML = tab==='today'?todayHTML(): tab==='ideas'?ideasHTML(): tab==='saved'?savedHTML(): momentsHTML();
@@ -232,7 +262,7 @@ function todayHTML(){
     const doneToday = S.log.some(e=>e.a===pick.id && e.d===dkey());
     h += `<section class="hero${pick.img?' has-img':''}" aria-labelledby="hero-t">${pick.img?`<button class="hero-pic" data-open="${pick.id}" tabindex="-1" aria-hidden="true">${thumb(pick,'hero-img')}</button>`:heroArt()}
       <p class="eyebrow">${doneToday?'Done today':'Idea for today'}</p>
-      <h2 id="hero-t">${esc(pick.t)}</h2>
+      <h2 id="hero-t" tabindex="-1">${esc(pick.t)}</h2>
       <p class="why">${fill(pick.w)}</p>
       ${metaHTML(pick,true)}
       ${s.polish && (pick.plp||pick.pl) ? `<p class="small pl-line">Po polsku: <b lang="pl">${esc(splitPl(pick.plp||pick.pl)[0])}</b></p>`:''}
@@ -348,7 +378,7 @@ function momentsHTML(){
   const today=dkey(), yest=dkey(new Date(Date.now()-864e5));
   for(const [d,items] of Object.entries(groups)){
     const label = d===today?'Today': d===yest?'Yesterday': parseD(d).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'});
-    h += `<div class="mgroup"><h3>${label}</h3>` + items.map(e=>{ const a=BY_ID[e.a]; if(!a) return '';
+    h += `<div class="mgroup"><h2>${label}</h2>` + items.map(e=>{ const a=BY_ID[e.a]; if(!a) return '';
       return `<div class="mem">${thumb(a,'thumb sm')}<div class="body"><button class="title" data-open="${a.id}">${esc(a.t)}</button><p class="meta">${e.min} min${e.who?` · ${esc(e.who)}`:''}</p>${e.note?`<p class="note">“${esc(e.note)}”</p>`:''}</div><button class="icon-btn" data-del="${e.id}" aria-label="Delete this moment">${ic('trash')}</button></div>`; }).join('') + `</div>`;
   }
   return h;
@@ -357,18 +387,23 @@ function momentsHTML(){
 /* ---------- Sheets ---------- */
 let sheetStack = [];
 function openSheet(html, opts={}){
+  const top=sheetStack[sheetStack.length-1];
+  if(top && opts.name && top.name===opts.name) return top.sh;          /* double tap: don't stack the same sheet twice */
+  if(top && top.closing) return top.sh;
   const root=$('#sheet-root'); const prev=document.activeElement;
   const scrim=document.createElement('div'); scrim.className='scrim';
   const sh=document.createElement('div'); sh.className='sheet'; sh.setAttribute('role','dialog'); sh.setAttribute('aria-modal','true'); if(opts.label) sh.setAttribute('aria-label',opts.label);
   sh.innerHTML = `<div class="grab" aria-hidden="true"></div><div class="sheet-head"><span>${opts.head||''}</span><button class="icon-btn" data-act="close-sheet" aria-label="Close">${ic('close')}</button></div><div class="sheet-body">${html}</div>${opts.foot?`<div class="sheet-foot">${opts.foot}</div>`:''}`;
   root.append(scrim, sh);
   enableDragClose(sh);
-  scrim.addEventListener('click', ()=>history.back());
-  const entry={sh,scrim,prev,onClose:opts.onClose,name:opts.name};
+  const opened=Date.now(); scrim.addEventListener('click', ()=>{ if(Date.now()-opened<450) return; closeSheetUI(); });   /* a double tap must not close what the first tap opened */
+  const prevSel = prev && prev.dataset ? ['act','open','tab','quick','coll'].map(k=>prev.dataset[k]!=null?`[data-${k}="${CSS.escape(prev.dataset[k])}"]`:'').join('') : '';
+  const entry={sh,scrim,prev,prevSel,onClose:opts.onClose,name:opts.name};
   sheetStack.push(entry);
-  document.body.classList.add('sheet-open');
+  document.body.classList.add('sheet-open'); $('#app').inert=true;   /* the page behind a sheet can't be focused, tapped or read out */
   history.pushState({sheet:sheetStack.length}, '');
-  requestAnimationFrame(()=>{ sh.classList.add('open'); scrim.classList.add('open'); const f = sh.querySelector(opts.focus||'h2,[autofocus]') || sh.querySelector('button'); if(f){ if(!f.hasAttribute('tabindex') && f.tagName==='H2') f.setAttribute('tabindex','-1'); f.focus({preventScroll:true}); } });
+  void sh.offsetHeight; sh.classList.add('open'); scrim.classList.add('open');   /* open now (forced reflow keeps the slide-in); never depend on a frame that may not come */
+  { const f = sh.querySelector(opts.focus||'h2,[autofocus]') || sh.querySelector('button'); if(f){ if(!f.hasAttribute('tabindex') && f.tagName==='H2') f.setAttribute('tabindex','-1'); f.focus({preventScroll:true}); } }
   return sh;
 }
 /* Swipe down to close: there is no browser back button in an installed iOS app */
@@ -383,13 +418,15 @@ function closeTopSheet(){
   e.sh.classList.remove('open'); e.scrim.classList.remove('open');
   const rm=()=>{ e.sh.remove(); e.scrim.remove(); };
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) rm(); else setTimeout(rm, 280);
-  if(!sheetStack.length) document.body.classList.remove('sheet-open');
+  if(!sheetStack.length){ document.body.classList.remove('sheet-open'); $('#app').inert=false; }
   if(e.onClose) e.onClose();
-  if(e.prev && document.contains(e.prev)) e.prev.focus({preventScroll:true});
+  const back = (e.prev && document.contains(e.prev)) ? e.prev : (e.prevSel ? document.querySelector('#main '+e.prevSel+', .sheet.open '+e.prevSel) : null);
+  if(back) back.focus({preventScroll:true});
 }
 let afterClose=null;
 window.addEventListener('popstate', ()=>{ const target=(history.state&&history.state.sheet)||0; while(sheetStack.length>target) closeTopSheet(); if(!sheetStack.length && afterClose){ const f=afterClose; afterClose=null; f(); } });
 function closeSheetUI(){ if(sheetStack.length) history.back(); }
+document.addEventListener('focusin', e=>{ const top=sheetStack[sheetStack.length-1]; if(top && !top.sh.contains(e.target) && !e.target.closest('#toast')){ const f=top.sh.querySelector('h2[tabindex],button'); if(f) f.focus({preventScroll:true}); } });
 document.addEventListener('keydown', e=>{
   if(!sheetStack.length) return;
   if(e.key==='Escape'){ e.preventDefault(); closeSheetUI(); }
@@ -440,12 +477,12 @@ function openDone(id){
   const mins=[5,10,20,30,45]; const def = a.m;
   const html = `<h2 class="st" style="font-size:var(--fs-xl)" tabindex="-1">Lovely. How long did you play?</h2><p class="muted small" style="margin-top:4px">${esc(a.t)}</p>
   <form id="done-form" data-id="${id}">
-    <div class="field"><span>Minutes</span><div class="seg" role="radiogroup" aria-label="Minutes">${mins.map(m=>`<button type="button" class="chip" role="radio" data-min="${m}" aria-checked="${m===def}" aria-pressed="${m===def}">${m} min</button>`).join('')}</div></div>
-    ${who.length?`<div class="field"><span>Who played?</span><div class="seg" role="radiogroup" aria-label="Who played">${who.map((w,i)=>`<button type="button" class="chip" role="radio" data-who="${esc(w)}" aria-checked="false" aria-pressed="false">${esc(w)}</button>`).join('')}</div></div>`:''}
+    <div class="field"><span>Minutes</span><div class="seg" role="radiogroup" aria-label="Minutes">${mins.map(m=>`<button type="button" class="chip" role="radio" data-min="${m}" aria-checked="${m===def}">${m} min</button>`).join('')}</div></div>
+    ${who.length?`<div class="field"><span>Who played?</span><div class="seg" role="radiogroup" aria-label="Who played">${who.map((w,i)=>`<button type="button" class="chip" role="radio" data-who="${esc(w)}" aria-checked="false">${esc(w)}</button>`).join('')}</div></div>`:''}
     <label class="field"><span>A little memory <small class="muted">(optional)</small></span><input class="input" name="note" maxlength="140" placeholder="He laughed every time the tower fell"></label>
     <button class="btn btn-primary btn-block" type="submit" style="margin-top:20px">Save moment</button>
   </form>`;
-  openSheet(html, {label:'Save a moment', focus:'h2'});
+  openSheet(html, {label:'Save a moment', focus:'h2', name:'done:'+id});
 }
 
 /* ---------- Install ---------- */
@@ -492,10 +529,12 @@ function settingsHTML(){
   <p class="small">Ideas are written for Pebble and grounded in public guidance: Harvard Center on the Developing Child (serve and return), NHS Best Start in Life, CDC milestones for 2 years and 30 months, ZERO TO THREE, BookTrust, and the EYFS areas of learning.</p>
   <p class="fine">Pebble is for fun and connection, not a developmental assessment. If you're worried about your child's development, talk to your health visitor or GP. Always supervise play, especially near water and with small objects. Version ${VERSION}.</p></div>`;
 }
-function openSettings(){ openSheet(settingsHTML(), {label:'Settings', focus:'h2', onClose:()=>render()}); }
+function openSettings(){ openSheet(settingsHTML(), {label:'Settings', focus:'h2', name:'settings', onClose:()=>render()}); }
 function readSettingsForm(){
   const f=$('#settings-form'); if(!f) return; const s=S.settings;
-  s.child=f.child.value.trim(); s.birth=f.birth.value; s.parents=[f.p1.value.trim(), f.p2.value.trim()]; save();
+  s.child=f.child.value.trim().slice(0,30); s.parents=[f.p1.value.trim().slice(0,30), f.p2.value.trim().slice(0,30)];
+  const b=f.birth.value; if(!b) s.birth=''; else if(isDate(b) && b<=dkey()) s.birth=b; else { toast('Birthday can\'t be in the future'); }
+  save();
 }
 function applyTheme(){ const t=S.settings.theme; if(t==='system') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme',t);
   const dark = t==='dark' || (t==='system' && matchMedia('(prefers-color-scheme: dark)').matches);
@@ -503,9 +542,11 @@ function applyTheme(){ const t=S.settings.theme; if(t==='system') document.docum
   const sb=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]'); if(sb) sb.setAttribute('content', dark?'black':'default'); }
 
 /* ---------- Events ---------- */
+let lastTap={el:null,t:0};
 document.addEventListener('click', e=>{
   const t = e.target.closest('button,[data-open]'); if(!t) return;
   const d = t.dataset;
+  if(d.fav||d.done||d.act==='another'||d.del){ const now=Date.now(); if(lastTap.el===t && now-lastTap.t<450) return; lastTap={el:t,t:now}; }
   if(t.classList.contains('tab')) return setTab(d.tab);
   if(d.open){ return openDetail(d.open); }
   if(d.goto){ return closeAllSheets(()=>setTab(d.goto)); }
@@ -516,8 +557,8 @@ document.addEventListener('click', e=>{
     return; }
   if(d.fav){ const id=d.fav; const i=S.favs.indexOf(id); if(i>=0){ S.favs.splice(i,1); toast('Removed from saved'); } else { S.favs.push(id); toast('Saved'); } save(); refreshDetailFoot(id); return render(); }
   if(d.done){ return openDone(d.done); }
-  if(d.min){ t.parentElement.querySelectorAll('[data-min]').forEach(b=>{ b.setAttribute('aria-checked', b===t); b.setAttribute('aria-pressed', b===t); }); return; }
-  if(d.who!==undefined){ const was=t.getAttribute('aria-checked')==='true'; t.parentElement.querySelectorAll('[data-who]').forEach(b=>{ b.setAttribute('aria-checked','false'); b.setAttribute('aria-pressed','false'); }); if(!was){ t.setAttribute('aria-checked','true'); t.setAttribute('aria-pressed','true'); } return; }
+  if(d.min){ t.parentElement.querySelectorAll('[data-min]').forEach(b=>{ b.setAttribute('aria-checked', b===t); }); return; }
+  if(d.who!==undefined){ const was=t.getAttribute('aria-checked')==='true'; t.parentElement.querySelectorAll('[data-who]').forEach(b=>{ b.setAttribute('aria-checked','false'); }); if(!was){ t.setAttribute('aria-checked','true'); } return; }
   if(d.del){ if(confirm('Delete this moment?')){ S.log=S.log.filter(x=>x.id!==d.del); save(); render(); toast('Moment deleted'); } return; }
   if(d.goal){ S.settings.goal=+d.goal; save(); t.parentElement.querySelectorAll('[data-goal]').forEach(b=>b.setAttribute('aria-pressed', b===t)); return; }
   if(d.theme){ S.settings.theme=d.theme; save(); applyTheme(); t.parentElement.querySelectorAll('[data-theme]').forEach(b=>b.setAttribute('aria-pressed', b===t)); return; }
@@ -532,17 +573,19 @@ document.addEventListener('click', e=>{
     case 'filters': return openFilters();
     case 'apply-filters': closeSheetUI(); return;
     case 'export': return exportData();
-    case 'reset': if(confirm('Erase all settings, favourites and moments on this phone? This cannot be undone.')){ localStorage.removeItem(KEY); S=load(); applyTheme(); closeAllSheets(()=>{ render(); toast('Everything erased'); }); } return;
+    case 'reset': if(confirm('Erase all settings, favourites and moments on this phone? This cannot be undone.')){ try{ localStorage.removeItem(KEY); localStorage.removeItem(KEY+'.unreadable'); }catch(_){} S=load(); applyTheme(); closeAllSheets(()=>{ render(); toast('Everything erased'); }); } return;
     case 'dismiss-ios': S.hints={...(S.hints||{}), ios:true}; save(); t.closest('.install-hint')?.remove(); return;
     case 'install': if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.finally(()=>{ deferredPrompt=null; const r=$('#install-row'); if(r) r.remove(); }); } return;
     case 'skip-welcome': S.settings.onboarded=true; save(); return setTab('today');
   }
 });
-function closeAllSheets(then){ const n=sheetStack.length; if(!n){ if(then) then(); return; } afterClose=then||null; history.go(-n); }
+function closeAllSheets(then){ const n=sheetStack.length; if(!n){ if(then) then(); return; } sheetStack.forEach(x=>x.closing=true); afterClose=then||null; history.go(-n); }
 document.addEventListener('submit', e=>{
   e.preventDefault(); const f=e.target;
-  if(f.id==='welcome-form'){ S.settings.child=f.child.value.trim(); S.settings.birth=f.birth.value; S.settings.parents=[f.p1.value.trim(), '']; S.settings.polish=!!(f.polish&&f.polish.checked); S.settings.onboarded=true; save(); setTab('today'); toast('Welcome to Pebble'); }
+  if(f.id==='welcome-form'){ const b=f.birth.value; if(b && !(isDate(b) && b<=dkey())){ toast('Birthday can\'t be in the future'); f.birth.focus(); return; }
+    S.settings.child=f.child.value.trim().slice(0,30); S.settings.birth=b; S.settings.parents=[f.p1.value.trim().slice(0,30), '']; S.settings.polish=!!(f.polish&&f.polish.checked); S.settings.onboarded=true; save(); setTab('today'); toast('Welcome to Pebble'); }
   if(f.id==='done-form'){
+    if(f.dataset.saved) return; f.dataset.saved='1'; f.querySelector('[type=submit]')?.setAttribute('disabled','');
     const id=f.dataset.id; const minB=f.querySelector('[data-min][aria-checked="true"]'); const whoB=f.querySelector('[data-who][aria-checked="true"]');
     S.log.push({id:'m'+Date.now().toString(36)+Math.random().toString(36).slice(2,6), a:id, d:dkey(), ts:new Date().toISOString(), min: minB?+minB.dataset.min:BY_ID[id].m, who: whoB?whoB.dataset.who:'', note: f.note.value.trim().slice(0,140)});
     save(); closeAllSheets(()=>{ render(); toast('Saved to Moments'); });
@@ -556,10 +599,10 @@ document.addEventListener('input', e=>{
 document.addEventListener('change', e=>{
   if(e.target.id==='import-file'){ const file=e.target.files[0]; if(!file) return; const r=new FileReader();
     r.onload=()=>{ try{ const data=JSON.parse(r.result); if(!data || data.app!=='pebble' || !data.state) throw new Error('bad');
-        const st=data.state; S={...structuredClone(DEFAULTS), ...st, settings:{...DEFAULTS.settings, ...(st.settings||{}), onboarded:true}};
-        S.favs=(S.favs||[]).filter(id=>BY_ID[id]); S.log=(S.log||[]).filter(x=>x&&BY_ID[x.a]&&/^\d{4}-\d\d-\d\d$/.test(x.d));
+        S=normalize(data.state); S.settings.onboarded=true;
         save(); applyTheme(); closeAllSheets(()=>{ render(); toast('Backup imported'); }); }
-      catch(err){ toast("That file isn't a Pebble backup"); } };
+      catch(err){ toast("That file isn't a Pebble backup"); } e.target.value=''; };
+    if(file.size>5e6){ toast("That file is too big to be a Pebble backup"); e.target.value=''; return; }
     r.readAsText(file); }
 });
 function exportData(){
@@ -574,7 +617,7 @@ function filterSheetHTML(){
   ${grp('Where','place',Object.entries(PLACES).map(([k,p])=>[k,p.n]))}
   ${grp('Helps with','area',Object.entries(AREAS).map(([k,a])=>[k,a.n]))}`;
 }
-function openFilters(){ openSheet(filterSheetHTML(), {label:'Filters', focus:'h2', foot:`<button class="btn btn-tonal" data-act="clear-filters-sheet">Clear</button><button class="btn btn-primary" data-act="apply-filters" id="apply-f">Show ${filtered().length} ideas</button>`, onClose:()=>render()}); }
+function openFilters(){ openSheet(filterSheetHTML(), {label:'Filters', focus:'h2', name:'filters', foot:`<button class="btn btn-tonal" data-act="clear-filters-sheet">Clear</button><button class="btn btn-primary" data-act="apply-filters" id="apply-f">Show ${filtered().length} ideas</button>`, onClose:()=>render()}); }
 function updateFilterSheetCount(){ const b=$('#apply-f'); if(b) b.textContent=`Show ${filtered().length} ideas`; }
 document.addEventListener('click', e=>{ const t=e.target.closest('[data-act="clear-filters-sheet"]'); if(!t) return; ui.f={time:[],energy:[],place:[],area:[]}; t.closest('.sheet').querySelectorAll('[data-f]').forEach(b=>b.setAttribute('aria-pressed','false')); updateFilterSheetCount(); });
 
@@ -584,6 +627,17 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener?.('change', applyThe
 applyTheme();
 const initial = location.hash.slice(1); setTab(['today','ideas','saved','moments'].includes(initial)?initial:'today', false);
 history.replaceState(null,'',location.pathname+location.search+'#'+tab);
-if('serviceWorker' in navigator && location.protocol.startsWith('http')){ window.addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').catch(()=>{})); }
-window.__pebble = { get state(){return S;}, todaysPick, eligible, ACTS };
+/* Day rollover: an app left open overnight shows the new day's idea when it comes back */
+function checkDay(){ if(dkey()!==renderedDay){ renderedDay=dkey(); if(!sheetStack.length) render(); } }
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='visible'){ checkDay(); reg && reg.update && reg.update().catch(()=>{}); } });
+setInterval(checkDay, 60000);
+/* Service worker: when a new version takes over, reload once (only if nothing is open) so nobody is stuck on an old copy */
+let reg=null;
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){
+  const hadController = !!navigator.serviceWorker.controller; let reloaded=false;
+  navigator.serviceWorker.addEventListener('controllerchange', ()=>{ if(!hadController || reloaded) return; reloaded=true;
+    if(!sheetStack.length) location.reload(); else toast('Pebble has updated. It will refresh next time you open it.'); });
+  window.addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').then(r=>{reg=r;}).catch(()=>{}));
+}
+window.__pebble = { get state(){return S;}, todaysPick, eligible, ACTS, sheets:()=>sheetStack.length, VERSION };
 })();

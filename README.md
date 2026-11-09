@@ -17,3 +17,6 @@ Vanilla HTML/CSS/JS, no build step. Activities live in `content/a*.txt`; run `py
 
 
 Illustrations: `img/<id>.webp` (600×450, ~8 KB each), generated in one shared style; scene descriptions, alt text and YouTube search queries live in `content/images.tsv`. Polish rhymes are in `content/a5.txt`; sources are listed in the project research notes.
+
+## Status (9 Nov 2026)
+v2.1.0: gauntlet hardening. Storage and backups are normalised on load and import (a damaged or hand-edited file can no longer blank the app), ages under 18 months and over 4 years still get ideas, future birthdays are refused, double taps can't double-log a moment or snap a sheet shut, large text (200%) no longer overflows, the daily idea rolls over at midnight in an app left open, the service worker precaches with cache:'reload' and reloads once onto a new version, offline pictures not yet seen show a soft blank tile, and several safety notes were tightened (no pasta necklaces, laundry capsules, traffic, stairs, sun). Everyday Polish phrases still want a native check.

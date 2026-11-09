@@ -226,7 +226,7 @@ harder: Hide three toys and count them out.
 safety: Supervise; rice and oats can be a choking risk if eaten in handfuls. Put it away after.
 
 ## Ice rescue
-30-48 | 20 | low | kitchen | Small plastic toys frozen in a tub of water, warm water, a spoon | utw,pd | summer
+30-48 | 20 | low | kitchen | Plastic toys (too big to swallow) frozen in a tub of water, warm water, a spoon | utw,pd | summer
 - The night before, freeze a toy in a tub of water.
 - Tip out the ice block onto a tray.
 - Rescue the toy with warm water and a spoon.

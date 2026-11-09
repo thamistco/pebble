@@ -32,7 +32,7 @@ plp: Połóż łyżkę tutaj. (Put the spoon here.)
 why: Cooking is early science, maths and a lot of pride.
 easier: Just stirring, with you holding the bowl.
 harder: Let them crack an egg into a separate bowl.
-safety: An adult handles the hob, oven and knives. Wash hands after raw egg.
+safety: An adult handles the hob, oven and knives. No tasting raw mixture (raw egg and flour); wash hands after.
 pl: miska, mieszać (bowl, stir)
 plp: Mieszamy, mieszamy! (Stir, stir!)
 
@@ -55,7 +55,7 @@ plp: Smakuje ci? (Do you like it?)
 - You're the customer. Ask for a cup of tea and a cake.
 - Pay with pretend money and say thank you.
 - Swap: you're the waiter, they order.
-why: Pretend cooking and serving are 30-month milestones, and full of words.
+why: Pretend play is a 30-month milestone, and serving and ordering are full of words.
 easier: They hand you a pretend cup; you sip loudly.
 harder: Give them a two-item order to remember.
 pl: herbata, proszę, dziękuję (tea, please, thank you)
@@ -66,7 +66,7 @@ plp: Poproszę herbatkę. (A cup of tea, please.)
 - Tie a big knot at one end of the string.
 - Show them how to thread one piece on.
 - Count the pieces as they go.
-- Tie it into a necklace when they're done.
+- Lay it out as a long snake and admire it (no necklaces: cords round the neck aren't safe).
 why: Threading takes careful two-hand control, practice for later skills like dressing.
 easier: Use a pipe cleaner or a straw, which is stiffer.
 harder: Make a pattern: one, then two.
@@ -83,7 +83,7 @@ easier: Fill and tip, fill and tip.
 harder: How many little cups fill the big one?
 safety: Never leave them alone in the bath, even for a moment.
 pl: pełny, pusty (full, empty)
-plp: Nalej wodę! (Pour the water!)
+plp: Nalej wody! (Pour some water!)
 
 ## Sink or float
 24-48 | 10 | low | bath | A few bath-safe things (sponge, spoon, plastic duck, lid) | utw,cl |
@@ -231,7 +231,7 @@ safety: Under 3s: watch they don't go in mouths.
 
 ## Big box car
 24-48 | 30 | med | indoors | A big cardboard box, crayons | ead,cl,pse | weekend,rainy
-- Get a big box and cut out a door (adult job).
+- Get a big box, pull out any staples and cut out a door (adult job).
 - Decorate it as a car, a bus, a train or a house.
 - Drive somewhere: "Where shall we go?"
 - Make the beep-beep and brrrm noises.
@@ -248,7 +248,7 @@ harder: Make tickets and play bus.
 why: Squeezing and rolling builds hand strength for later drawing and dressing.
 easier: Poke holes with a finger.
 harder: Make a snake, a cat, a dinner plate.
-safety: Watch that it doesn't get eaten.
+safety: Watch that it doesn't get eaten; homemade dough is very salty.
 pl: oczy, nos, buzia (eyes, nose, mouth)
 plp: Zrobimy buzię? (Shall we make a face?)
 
@@ -269,7 +269,7 @@ plp: Jeszcze jeden klocek… bum! (One more block… crash!)
 - Put a few tubs and their lids in a pile.
 - Find which lid fits which tub.
 - Twist or press the lids on and off.
-- Hide a small toy inside one and guess which.
+- Hide a toy (too big to swallow) inside one and guess which.
 why: Twisting lids is a 30-month milestone; matching is problem-solving.
 easier: Just two tubs.
 harder: Use screw-top jars (plastic only).
@@ -318,6 +318,7 @@ harder: Name the colour and the sound too.
 why: Simple chores with praise build confidence and cooperation.
 easier: Just carry the basket together.
 harder: Match socks afterwards.
+safety: Keep laundry capsules and detergent locked away, and close the machine door afterwards so they cannot climb in.
 pl: pranie, pralka (washing, washing machine)
 plp: Wrzuć skarpetkę! (Pop the sock in!)
 
@@ -360,7 +361,7 @@ harder: Ask what made them feel that way.
 24-48 | 5 | med | indoors,outdoors | Stairs or steps | math,pd |
 - Hold hands on the stairs.
 - Count each step out loud.
-- Go slow, then fast (carefully).
+- Go slowly, one step at a time.
 - Count back down.
 why: Counting out loud while moving is easy everyday maths.
 easier: Count to three, then start again.
@@ -379,7 +380,7 @@ why: Describing size is a CDC 30-month tip and early maths.
 easier: Just big and little.
 harder: Add "middle-sized".
 pl: duży, mały (big, small)
-plp: Która łyżka jest duża? (Which spoon is big?)
+plp: Która łyżka jest większa? (Which spoon is bigger?)
 
 ## Sound hunt at home
 24-48 | 10 | low | indoors | None | utw,cl |
