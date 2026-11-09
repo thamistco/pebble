@@ -9,6 +9,7 @@ easier: Just splash the veg in the water.
 harder: Count the clean ones into a pan.
 safety: Keep them away from the hob and knives.
 pl: marchewka, ziemniak (carrot, potato)
+plp: Myjemy marchewkę. (We are washing the carrot.)
 
 ## Set the table
 24-48 | 5 | low | kitchen | Plastic cups, spoons, napkins | pse,math |
@@ -20,6 +21,7 @@ why: Helping get ready for meals is a CDC tip for 2-year-olds: it builds pride a
 easier: Just carry the napkins.
 harder: Let them work out how many cups you need.
 pl: łyżka, kubek (spoon, cup)
+plp: Połóż łyżkę tutaj. (Put the spoon here.)
 
 ## Mixing bowl
 24-48 | 20 | med | kitchen | A simple recipe (pancakes, porridge, flapjacks) | pd,math,utw | weekend
@@ -31,6 +33,8 @@ why: Cooking is early science, maths and a lot of pride.
 easier: Just stirring, with you holding the bowl.
 harder: Let them crack an egg into a separate bowl.
 safety: An adult handles the hob, oven and knives. Wash hands after raw egg.
+pl: miska, mieszać (bowl, stir)
+plp: Mieszamy, mieszamy! (Stir, stir!)
 
 ## Taste test
 18-48 | 10 | low | kitchen | Three foods they already eat | cl,utw |
@@ -43,6 +47,7 @@ easier: Two foods: crunchy and soft.
 harder: Taste with eyes closed and guess.
 safety: Under 3s: cut grapes, cherry tomatoes and similar into quarters lengthways.
 pl: słodki, kwaśny (sweet, sour)
+plp: Smakuje ci? (Do you like it?)
 
 ## Pretend café
 24-48 | 20 | low | kitchen,indoors | Plastic plates, cups, toy food or real dry snacks | ead,cl,math | rainy
@@ -53,6 +58,8 @@ pl: słodki, kwaśny (sweet, sour)
 why: Pretend cooking and serving are 30-month milestones, and full of words.
 easier: They hand you a pretend cup; you sip loudly.
 harder: Give them a two-item order to remember.
+pl: herbata, proszę, dziękuję (tea, please, thank you)
+plp: Poproszę herbatkę. (A cup of tea, please.)
 
 ## Pasta threading
 30-48 | 20 | low | kitchen,indoors | Penne pasta and a shoelace or string | pd,math | rainy
@@ -76,6 +83,7 @@ easier: Fill and tip, fill and tip.
 harder: How many little cups fill the big one?
 safety: Never leave them alone in the bath, even for a moment.
 pl: pełny, pusty (full, empty)
+plp: Nalej wodę! (Pour the water!)
 
 ## Sink or float
 24-48 | 10 | low | bath | A few bath-safe things (sponge, spoon, plastic duck, lid) | utw,cl |
@@ -87,6 +95,8 @@ why: Guessing and testing is how young scientists think.
 easier: Just drop things in and watch.
 harder: Make something that floats sink (fill it with water).
 safety: Constant supervision in the bath.
+pl: pływa, tonie (floats, sinks)
+plp: Pływa czy tonie? (Will it float or sink?)
 
 ## Bath-time body parts
 18-36 | 5 | low | bath | A flannel | cl,pd |
@@ -98,6 +108,8 @@ why: Bath time is one of the NHS's top bonding moments.
 easier: Hands, feet, tummy.
 harder: Knees, shoulders, chin, eyebrows.
 safety: Supervise at all times.
+pl: rączka, nóżka, brzuszek (hand, leg, tummy)
+plp: Myjemy rączki. (We are washing hands.)
 
 ## Bubble beard
 18-36 | 5 | low | bath | Bath bubbles | ead,pse |
@@ -119,6 +131,8 @@ safety: Keep bubbles out of eyes.
 why: Knowing at least one colour is a 30-month milestone.
 easier: Show the colour and ask "Find one like this."
 harder: Find two of the same colour.
+pl: czerwony, niebieski (red, blue)
+plp: Znajdź coś czerwonego! (Find something red!)
 
 ## Warm towel cuddle
 18-48 | 5 | low | bath,bedtime | A towel | pse |
@@ -129,6 +143,8 @@ harder: Find two of the same colour.
 why: Warm, predictable routines help toddlers feel safe and settle for sleep.
 easier: Just the cuddle.
 harder: Let them wrap teddy too.
+pl: ręcznik, ciepło (towel, warm)
+plp: Przytulas! (Cuddle!)
 
 ## Goodnight, room
 18-36 | 5 | low | bedtime | None | cl,pse |
@@ -140,6 +156,7 @@ why: A calm, predictable bedtime routine helps sleep, and naming objects adds wo
 easier: Three things only.
 harder: Say goodnight to things they can't see: the moon, the sea.
 pl: dobranoc (good night)
+plp: Dobranoc, lampko! Dobranoc, misiu! (Goodnight, lamp! Goodnight, teddy!)
 
 ## Breathe like a balloon
 24-48 | 5 | low | bedtime | None | pse,pd |
@@ -150,6 +167,8 @@ pl: dobranoc (good night)
 why: Slow breathing is a simple calming tool you can use together.
 easier: Blow on a finger like a candle.
 harder: Put a teddy on their tummy and watch it rise and fall.
+pl: wdech, wydech (breathe in, breathe out)
+plp: Wdech… i wydech. (Breathe in… and out.)
 
 ## Lullaby swap
 18-48 | 5 | low | bedtime | None | pse,cl,ead |
@@ -172,6 +191,8 @@ why: Light play makes a familiar room new and exciting.
 easier: Just shine the torch on things and name them.
 harder: Give clues: "It's near something soft."
 safety: Check the battery cover is closed.
+pl: latarka, ciemno (torch, dark)
+plp: Gdzie świeci latarka? (Where is the torch shining?)
 
 ## Finger painting
 18-48 | 20 | med | indoors,kitchen | Paint or yoghurt with food colouring, paper | ead,pd | rainy
@@ -183,6 +204,8 @@ why: Mark-making is how writing begins, and finger paint is a CDC 2-year tip.
 easier: Paint inside a sealed sandwich bag (no mess).
 harder: Mix two colours and see what happens.
 safety: Use child-safe paint.
+pl: farba, kolor (paint, colour)
+plp: Jaki kolor wybierasz? (Which colour do you pick?)
 
 ## Shaving-foam tray
 24-48 | 20 | med | indoors,kitchen | Shaving foam or whipped cream, a tray | ead,pd,lit |
@@ -226,6 +249,8 @@ why: Squeezing and rolling builds hand strength for later drawing and dressing.
 easier: Poke holes with a finger.
 harder: Make a snake, a cat, a dinner plate.
 safety: Watch that it doesn't get eaten.
+pl: oczy, nos, buzia (eyes, nose, mouth)
+plp: Zrobimy buzię? (Shall we make a face?)
 
 ## Stack and crash
 18-36 | 10 | med | indoors | Blocks, cups or tins | math,pd,pse |
@@ -236,6 +261,8 @@ safety: Watch that it doesn't get eaten.
 why: Taking turns building and knocking down is a CDC 2-year tip.
 easier: Two blocks, crash.
 harder: Build the tower biggest-to-smallest.
+pl: wieża, klocek (tower, block)
+plp: Jeszcze jeden klocek… bum! (One more block… crash!)
 
 ## Lid match
 24-48 | 10 | low | kitchen | Plastic tubs with lids | pd,math,utw |
@@ -246,6 +273,8 @@ harder: Build the tower biggest-to-smallest.
 why: Twisting lids is a 30-month milestone; matching is problem-solving.
 easier: Just two tubs.
 harder: Use screw-top jars (plastic only).
+pl: pokrywka, pudełko (lid, tub)
+plp: Która pokrywka pasuje? (Which lid fits?)
 
 ## Sorting the shopping
 24-48 | 10 | low | kitchen | Your shopping | math,utw,pse |
@@ -267,6 +296,8 @@ why: Remembering where something is builds memory and attention.
 easier: One cup.
 harder: Shuffle twice before they guess.
 safety: Use a toy too big to swallow.
+pl: kubek, pod (cup, under)
+plp: Gdzie jest autko? (Where is the car?)
 
 ## Simple puzzle naming
 18-36 | 10 | low | indoors | Any simple puzzle | math,cl,pd |
@@ -287,6 +318,8 @@ harder: Name the colour and the sound too.
 why: Simple chores with praise build confidence and cooperation.
 easier: Just carry the basket together.
 harder: Match socks afterwards.
+pl: pranie, pralka (washing, washing machine)
+plp: Wrzuć skarpetkę! (Pop the sock in!)
 
 ## Dress-up parade
 24-48 | 20 | med | indoors | Grown-up hats, scarves, shoes | ead,pse,cl | rainy
@@ -298,6 +331,8 @@ why: Dress-up is a CDC 2-year tip for starting pretend play.
 easier: Just a hat swap.
 harder: Act out a mini story as the character.
 safety: Avoid anything with cords or long ties for little ones.
+pl: kapelusz, szalik, buty (hat, scarf, shoes)
+plp: Ale piękny kapelusz! (What a lovely hat!)
 
 ## Doctor, doctor
 30-48 | 20 | low | indoors | Teddy, a scarf for a bandage | ead,pse,cl |
@@ -308,6 +343,8 @@ safety: Avoid anything with cords or long ties for little ones.
 why: Acting out doctor visits can make real ones less scary.
 easier: Just give teddy a cuddle and a bandage.
 harder: Set up a waiting room with more toys as patients.
+pl: lekarz, bandaż (doctor, bandage)
+plp: Misia boli łapka. (Teddy has a sore paw.)
 
 ## Feelings check-in
 30-48 | 5 | low | bedtime,indoors | None | pse,cl |
@@ -329,6 +366,8 @@ why: Counting out loud while moving is easy everyday maths.
 easier: Count to three, then start again.
 harder: Count while hopping on two feet on flat ground.
 safety: Hold hands on stairs.
+pl: jeden, dwa, trzy (one, two, three)
+plp: Liczymy schodki! (Let's count the steps!)
 
 ## Big and little
 24-48 | 10 | low | indoors | Things from around the house | math,cl |
@@ -340,6 +379,7 @@ why: Describing size is a CDC 30-month tip and early maths.
 easier: Just big and little.
 harder: Add "middle-sized".
 pl: duży, mały (big, small)
+plp: Która łyżka jest duża? (Which spoon is big?)
 
 ## Sound hunt at home
 24-48 | 10 | low | indoors | None | utw,cl |
@@ -360,6 +400,8 @@ harder: Guess sounds from another room.
 why: Mirrors help toddlers learn about themselves, the start of "I" and "me".
 easier: Peekaboo in the mirror.
 harder: Ask them to show you a happy face, a sad face.
+pl: lustro, nos (mirror, nose)
+plp: Kto to jest w lustrze? (Who is that in the mirror?)
 
 ## Snow or frost explorer
 24-48 | 20 | med | outdoors | Warm clothes and gloves | utw,pd,cl | winter
@@ -372,6 +414,7 @@ easier: Look from the doorstep and touch the frost.
 harder: Bring some snow indoors in a tub and watch it melt.
 safety: Keep hands warm and avoid icy paths.
 pl: śnieg, zimno (snow, cold)
+plp: Zimno! Załóż rękawiczki. (Cold! Put your gloves on.)
 
 ## Autumn conker hunt
 24-48 | 20 | med | outdoors | A bag | utw,math | autumn
@@ -383,6 +426,8 @@ why: Seasonal hunts give rich describing words.
 easier: Just collect leaves and sticks.
 harder: Sort by size.
 safety: Conkers are not food and are a choking hazard for under 3s. Supervise and keep them out of reach at home.
+pl: kasztan (conker)
+plp: Masz kasztana! (You've got a conker!)
 
 ## Spring buds and birds
 24-48 | 20 | med | outdoors | None | utw,cl | spring
@@ -394,6 +439,7 @@ why: Noticing changes builds understanding of the world and new words.
 easier: Point and name.
 harder: Find three different flowers.
 pl: kwiat, ptak (flower, bird)
+plp: Słuchaj, ptaszek śpiewa! (Listen, a bird is singing!)
 
 ## Sunny shadow play
 24-48 | 10 | high | outdoors | A sunny day | utw,pd | summer
@@ -405,6 +451,8 @@ why: Shadow play is a ZERO TO THREE idea for curious 2-year-olds.
 easier: Wave at your shadows.
 harder: Make shadows hold hands.
 safety: Sun cream and a hat in summer.
+pl: cień, słońce (shadow, sun)
+plp: Gdzie jest twój cień? (Where is your shadow?)
 
 ## Rainy window race
 24-48 | 10 | low | indoors | A rainy window | utw,math | rainy,autumn,winter
@@ -415,3 +463,5 @@ safety: Sun cream and a hat in summer.
 why: Watching together and cheering is pure shared attention.
 easier: Trace drops with a finger.
 harder: Guess why some drops go faster.
+pl: deszcz, kropla (rain, drop)
+plp: Która kropla wygra? (Which drop will win?)

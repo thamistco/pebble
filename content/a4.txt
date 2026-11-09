@@ -8,6 +8,8 @@ why: A tiny change of scene turns snack time into time together, with little eff
 easier: Snack and a cuddle.
 harder: Let them plan the picnic: who comes, what we eat.
 safety: Sit up while eating; cut small round foods for under 3s.
+pl: piknik, koc (picnic, blanket)
+plp: Mamy piknik! (We are having a picnic!)
 
 ## Lie-down drawing
 24-48 | 10 | low | indoors | Paper and crayons | ead,pd,cl |
@@ -130,6 +132,8 @@ harder: Five toys.
 why: Combining counting and movement makes numbers stick.
 easier: Count to three.
 harder: Count to ten and back.
+pl: skok, raz, dwa, trzy (jump, one, two, three)
+plp: Skaczemy! Raz, dwa, trzy! (Jump! One, two, three!)
 
 ## Make a card for someone
 30-48 | 20 | low | indoors | Paper, crayons | ead,pse,lit |
@@ -140,6 +144,8 @@ harder: Count to ten and back.
 why: Making something for someone builds kindness and shows writing has a purpose.
 easier: Scribble a picture and add a handprint.
 harder: Let them try to write the first letter of their name.
+pl: kartka, dla babci (card, for grandma)
+plp: To dla kogo? (Who is it for?)
 
 ## Fill and post
 18-30 | 10 | low | indoors,kitchen | A tub with a slot cut in the lid, large blocks or lids | pd,math |
@@ -161,6 +167,8 @@ safety: Use items too big to swallow.
 why: Endings and beginnings in a game are part of serve-and-return.
 easier: Hide your face with your hands.
 harder: Hide a toy under the scarf.
+pl: a kuku (peekaboo)
+plp: Gdzie jest tata? A kuku! (Where is Daddy? Peekaboo!)
 
 ## Bubble wrap stomp
 18-36 | 5 | high | indoors | Bubble wrap | pd,pse | rainy
@@ -237,6 +245,8 @@ safety: Warm, not hot, water.
 why: Putting a toy to bed rehearses the routine and helps it feel safe.
 easier: Just tuck teddy in.
 harder: Let them read teddy a story.
+pl: miś, śpi (teddy, sleeps)
+plp: Miś już śpi. Dobranoc! (Teddy is asleep. Goodnight!)
 
 ## Dance to a Polish song
 18-48 | 10 | high | indoors | Your voice or music | ead,pd,cl | polish
@@ -248,6 +258,9 @@ why: Songs in your home languages give children words in both, and the NHS encou
 easier: Sway and clap along.
 harder: Let them be the train driver and choose the stops.
 pl: pociąg (train)
+plp: Ciuchcia jedzie! Wsiadamy! (The choo-choo is coming! All aboard!)
+words: Jedzie pociąg z daleka, / ani chwili nie czeka. / Konduktorze łaskawy, / zabierz nas do Warszawy!
+en: The train is coming from far away, it doesn't wait a moment. Kind conductor, take us to Warsaw!
 
 ## Kosi kosi łapci clapping
 18-30 | 5 | low | bedtime,indoors | None | cl,pse | polish
@@ -258,3 +271,7 @@ pl: pociąg (train)
 why: Clapping rhymes are a simple serve-and-return in any language.
 easier: Just clap and smile.
 harder: Clap faster, then slower.
+pl: łapki, babcia (little hands, grandma)
+plp: Klaszczemy! (Let's clap!)
+words: Kosi, kosi łapci, / pojedziem do babci. / Babcia da nam mleczka, / a dziadek jajeczka.
+en: Clap, clap little hands, we'll go to Grandma's. Grandma will give us milk, and Grandad an egg.

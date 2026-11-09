@@ -5,7 +5,7 @@ const DATA = window.PEBBLE_DATA;
 const ACTS = DATA.activities;
 const BY_ID = Object.fromEntries(ACTS.map(a=>[a.id,a]));
 const KEY = 'pebble.v1';
-const VERSION = '1.0.0';
+const VERSION = '2.0.0';
 
 /* ---------- Icons (inline SVG, 24px grid, stroke) ---------- */
 const P = {
@@ -49,6 +49,9 @@ const P = {
   people:'<circle cx="9" cy="8" r="3"/><path d="M3.5 19.5c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5"/><circle cx="17" cy="9" r="2.3"/><path d="M15.5 14.2c2.8-.3 5 1.6 5 4.8"/>',
   book:'<path d="M4 5.5c3-1 5.5-1 8 1 2.5-2 5-2 8-1V19c-3-1-5.5-1-8 1-2.5-2-5-2-8-1z"/><path d="M12 6.5V20"/>',
   hand:'<path d="M8 12V6a1.5 1.5 0 0 1 3 0v5M11 11V4.5a1.5 1.5 0 0 1 3 0V11M14 11V6a1.5 1.5 0 0 1 3 0v7c0 4-2.5 7-6 7-2.5 0-4-1.2-5.5-3.5L3.8 13.2a1.5 1.5 0 0 1 2.4-1.7L8 13.5"/>',
+  share:'<path d="M12 3.5v11M8 7.5l4-4 4 4"/><path d="M7 10.5H5.5v10h13v-10H17"/>',
+  play:'<circle cx="12" cy="12" r="8.5"/><path d="m10 8.5 5.5 3.5-5.5 3.5z"/>',
+  plus:'<path d="M12 5v14M5 12h14"/>',
   calendar:'<rect x="4" y="5.5" width="16" height="15" rx="2.5"/><path d="M4 10h16M8.5 3.5v4M15.5 3.5v4"/>',
 };
 const ic = (n, extra='') => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${P[n]||''}</svg>`;
@@ -75,7 +78,7 @@ const SEASON_N = {winter:'Winter',spring:'Spring',summer:'Summer',autumn:'Autumn
 const SEASON_I = {winter:'snow',spring:'flower',summer:'sun',autumn:'leaf'}[SEASON];
 
 /* ---------- Store ---------- */
-const DEFAULTS = { settings:{child:'', birth:'', parents:['',''], allAges:false, polish:false, theme:'system', goal:20, onboarded:false}, favs:[], log:[], shuffle:{date:'',n:0}, prompt:{date:'',n:0} };
+const DEFAULTS = { settings:{child:'', birth:'', parents:['',''], allAges:false, polish:false, theme:'system', goal:20, onboarded:false}, favs:[], log:[], shuffle:{date:'',n:0}, prompt:{date:'',n:0}, hints:{ios:false} };
 let S = load();
 function load(){
   try{ const raw = JSON.parse(localStorage.getItem(KEY)||'null'); if(!raw) return structuredClone(DEFAULTS);
@@ -151,7 +154,7 @@ const COLLECTIONS = [
   {k:'onthego', n:'Out & about', s:'Buses, queues, waiting rooms', i:'walk', c:'--a-ead', f:a=>a.p.includes('onthego')},
   {k:'season', n:SEASON_N+' ideas', s:'Right for the time of year', i:SEASON_I, c:'--a-math', f:a=>a.tags.includes(SEASON)},
   {k:'weekend', n:'Weekend', s:'Longer, bigger adventures', i:'calendar', c:'--a-pd', f:a=>a.tags.includes('weekend')||a.m>=30},
-  {k:'polish', n:'Polish words & songs', s:'Optional, for home', i:'chat', c:'--a-cl', f:a=>a.tags.includes('polish')||!!a.pl, polish:true},
+  {k:'polish', n:'Polish rhymes & songs', s:'Rymowanki i piosenki', i:'chat', c:'--a-cl', f:a=>a.tags.includes('polish'), polish:true},
   {k:'prompts', n:'Little prompts', s:'Ways to connect anytime', i:'sparkle', c:'--a-pse', prompts:true},
 ];
 
@@ -166,6 +169,9 @@ function art(a, cls='art'){
   const area = AREAS[a.d[0]]; const pl = PLACES[a.p[0]];
   return `<svg class="${cls}" viewBox="0 0 100 100" aria-hidden="true"><path d="${pebblePath(hash(a.id))}" fill="var(${area.c})"/><g transform="translate(34 34) scale(1.33)" fill="none" stroke="var(--a-ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" opacity=".85">${P[pl.i]}</g></svg>`;
 }
+function imgSrc(a){ return a.img ? `img/${a.id}.webp` : ''; }
+function thumb(a, cls='thumb'){ return a.img ? `<img class="${cls}" src="${imgSrc(a)}" alt="${esc(a.alt||a.t)}" width="600" height="450" loading="lazy" decoding="async">` : art(a); }
+function ytURL(a){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(a.yt || (a.t+' toddler activity')); }
 function heroArt(){
   return `<svg class="hero-art" viewBox="0 0 120 120" aria-hidden="true"><path d="${pebblePath(11)}" transform="translate(30 2) scale(.9)" fill="var(--sun)" opacity=".9"/><path d="${pebblePath(5)}" transform="translate(6 46) scale(.55)" fill="var(--sea)" opacity=".35"/><path d="${pebblePath(9)}" transform="translate(58 70) scale(.4)" fill="var(--brand)" opacity=".35"/></svg>`;
 }
@@ -177,7 +183,7 @@ function metaHTML(a, full){
 }
 function cardHTML(a){
   const fav = S.favs.includes(a.id); const done = lastDone(a.id);
-  return `<button class="card" data-open="${a.id}">${art(a)}<span class="body"><span class="title">${esc(a.t)}</span>${metaHTML(a)}</span><span class="end">${done?`<span class="done-dot" title="Done before">${ic('checkc')}</span><span class="vh">done before</span>`:''}${fav?`<span class="fav-on">${icFill('heart')}</span><span class="vh">saved</span>`:''}${ic('chevron')}</span></button>`;
+  return `<button class="card" data-open="${a.id}">${thumb(a)}<span class="body"><span class="title">${esc(a.t)}</span>${metaHTML(a)}</span><span class="end">${done?`<span class="done-dot" title="Done before">${ic('checkc')}</span><span class="vh">done before</span>`:''}${fav?`<span class="fav-on">${icFill('heart')}</span><span class="vh">saved</span>`:''}${ic('chevron')}</span></button>`;
 }
 
 /* ---------- Router / tabs ---------- */
@@ -206,6 +212,7 @@ function welcomeHTML(){
       <label class="field"><span>Your child's first name</span><input class="input" name="child" maxlength="30" placeholder="e.g. Sam"></label>
       <label class="field"><span>Their birthday</span><input class="input" type="date" name="birth" max="${dkey()}"></label>
       <label class="field"><span>Your name <small class="muted">(optional)</small></span><input class="input" name="p1" maxlength="30" placeholder="So we can say hello"></label>
+      <label class="check-row"><input type="checkbox" name="polish"><span><b>We speak Polish at home</b><small>Adds 22 Polish rhymes and songs, plus Polish words to say during everyday ideas. You can change this in Settings.</small></span></label>
       <p class="fine">${ic('shield','style="display:inline;width:14px;height:14px;vertical-align:-2px"')} Everything stays on this phone. No account, no tracking.</p>
       <div style="display:flex;gap:10px;margin-top:20px;flex-wrap:wrap">
         <button class="btn btn-primary" type="submit" style="flex:1">Let's begin</button>
@@ -223,17 +230,18 @@ function todayHTML(){
   let h = `<header class="top"><div><h1 class="greet">${hi}</h1><p class="sub">${sub}</p></div><button class="icon-btn" data-act="settings" aria-label="Settings">${ic('settings')}</button></header>`;
   if(pick){
     const doneToday = S.log.some(e=>e.a===pick.id && e.d===dkey());
-    h += `<section class="hero" aria-labelledby="hero-t">${heroArt()}
+    h += `<section class="hero${pick.img?' has-img':''}" aria-labelledby="hero-t">${pick.img?`<button class="hero-pic" data-open="${pick.id}" tabindex="-1" aria-hidden="true">${thumb(pick,'hero-img')}</button>`:heroArt()}
       <p class="eyebrow">${doneToday?'Done today':'Idea for today'}</p>
       <h2 id="hero-t">${esc(pick.t)}</h2>
       <p class="why">${fill(pick.w)}</p>
       ${metaHTML(pick,true)}
-      ${s.polish && pick.pl ? `<p class="small" style="margin-top:8px;color:var(--ink-2)">Polish: <b style="color:var(--ink)">${esc(pick.pl)}</b></p>`:''}
+      ${s.polish && (pick.plp||pick.pl) ? `<p class="small pl-line">Po polsku: <b lang="pl">${esc(splitPl(pick.plp||pick.pl)[0])}</b></p>`:''}
       <div class="actions"><button class="btn btn-primary" data-open="${pick.id}">Let's do it</button><button class="btn btn-tonal" data-act="another">${ic('shuffle')}Another</button></div>
     </section>`;
   } else {
     h += `<div class="empty"><h2>No ideas match the age setting</h2><p>Try turning on "Show ideas for every age" in settings.</p></div>`;
   }
+  if(showIosHint()) h += `<aside class="install-hint" aria-label="Install Pebble"><span class="ih-ic">${ic('share')}</span><p><b>Add Pebble to your Home Screen</b><br>Tap <span class="share-glyph" aria-label="Share">${ic('share')}</span> Share, then <b>Add to Home Screen</b>.</p><button class="icon-btn" data-act="dismiss-ios" aria-label="Dismiss">${ic('close')}</button></aside>`;
   // quick picker
   h += `<section class="section" aria-labelledby="q-h"><div class="section-h"><h2 id="q-h">What kind of moment?</h2></div><div class="quick">`+
     QUICK.map(q=>`<button class="qbtn" data-quick="${q.k}" aria-pressed="${ui.quick===q.k}"><span class="qi">${ic(q.i)}</span>${q.n}</button>`).join('')+`</div>`;
@@ -288,7 +296,7 @@ function filtered(){
   if(f.place.length) list=list.filter(a=>a.p.some(p=>f.place.includes(p)));
   if(f.area.length) list=list.filter(a=>a.d.some(d=>f.area.includes(d)));
   const q=ui.search.trim().toLowerCase();
-  if(q) list=list.filter(a=>(a.t+' '+a.mat+' '+a.s.join(' ')+' '+a.w+' '+a.d.map(d=>AREAS[d].n).join(' ')+' '+a.p.map(p=>PLACES[p].n).join(' ')).toLowerCase().includes(q));
+  if(q) list=list.filter(a=>(a.t+' '+a.mat+' '+a.s.join(' ')+' '+(S.settings.polish?(a.wd||'')+' '+(a.pl||'')+' '+(a.plp||''):'')+' '+a.w+' '+a.d.map(d=>AREAS[d].n).join(' ')+' '+a.p.map(p=>PLACES[p].n).join(' ')).toLowerCase().includes(q));
   return list;
 }
 function nFilters(){ const f=ui.f; return f.place.length+f.area.length; }
@@ -302,7 +310,6 @@ function ideasHTML(){
   if(ui.coll==='prompts'){
     h += `<div class="result-h"><p>${DATA.prompts.length} prompts · use any time, no setup</p></div><div class="list">`+
       DATA.prompts.map(p=>`<div class="prompt" style="padding:14px 16px"><span class="k">${esc(p.k)}</span><p style="font-size:var(--fs-m)">${esc(p.t)}</p></div>`).join('')+`</div>`;
-    if(s.polish){ h+=`<div class="section-h" style="margin-top:24px"><h2>Polish rhymes to try</h2></div><div class="list">`+DATA.plRhymes.map(r=>`<div class="pl-box"><b>${esc(r.t)}</b><br><span class="muted">${esc(r.n)}</span></div>`).join('')+`</div>`; }
     return h;
   }
   const n=nFilters();
@@ -342,7 +349,7 @@ function momentsHTML(){
   for(const [d,items] of Object.entries(groups)){
     const label = d===today?'Today': d===yest?'Yesterday': parseD(d).toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'short'});
     h += `<div class="mgroup"><h3>${label}</h3>` + items.map(e=>{ const a=BY_ID[e.a]; if(!a) return '';
-      return `<div class="mem">${art(a)}<div class="body"><button class="title" data-open="${a.id}">${esc(a.t)}</button><p class="meta">${e.min} min${e.who?` · ${esc(e.who)}`:''}</p>${e.note?`<p class="note">“${esc(e.note)}”</p>`:''}</div><button class="icon-btn" data-del="${e.id}" aria-label="Delete this moment">${ic('trash')}</button></div>`; }).join('') + `</div>`;
+      return `<div class="mem">${thumb(a,'thumb sm')}<div class="body"><button class="title" data-open="${a.id}">${esc(a.t)}</button><p class="meta">${e.min} min${e.who?` · ${esc(e.who)}`:''}</p>${e.note?`<p class="note">“${esc(e.note)}”</p>`:''}</div><button class="icon-btn" data-del="${e.id}" aria-label="Delete this moment">${ic('trash')}</button></div>`; }).join('') + `</div>`;
   }
   return h;
 }
@@ -355,6 +362,7 @@ function openSheet(html, opts={}){
   const sh=document.createElement('div'); sh.className='sheet'; sh.setAttribute('role','dialog'); sh.setAttribute('aria-modal','true'); if(opts.label) sh.setAttribute('aria-label',opts.label);
   sh.innerHTML = `<div class="grab" aria-hidden="true"></div><div class="sheet-head"><span>${opts.head||''}</span><button class="icon-btn" data-act="close-sheet" aria-label="Close">${ic('close')}</button></div><div class="sheet-body">${html}</div>${opts.foot?`<div class="sheet-foot">${opts.foot}</div>`:''}`;
   root.append(scrim, sh);
+  enableDragClose(sh);
   scrim.addEventListener('click', ()=>history.back());
   const entry={sh,scrim,prev,onClose:opts.onClose,name:opts.name};
   sheetStack.push(entry);
@@ -362,6 +370,13 @@ function openSheet(html, opts={}){
   history.pushState({sheet:sheetStack.length}, '');
   requestAnimationFrame(()=>{ sh.classList.add('open'); scrim.classList.add('open'); const f = sh.querySelector(opts.focus||'h2,[autofocus]') || sh.querySelector('button'); if(f){ if(!f.hasAttribute('tabindex') && f.tagName==='H2') f.setAttribute('tabindex','-1'); f.focus({preventScroll:true}); } });
   return sh;
+}
+/* Swipe down to close: there is no browser back button in an installed iOS app */
+function enableDragClose(sh){
+  let y0=null, dy=0; const body=()=>sh.querySelector('.sheet-body');
+  sh.addEventListener('touchstart', e=>{ if(e.touches.length!==1) return; const b=body(); if(b && b.scrollTop>0 && !e.target.closest('.grab')) return; y0=e.touches[0].clientY; dy=0; }, {passive:true});
+  sh.addEventListener('touchmove', e=>{ if(y0==null) return; dy=e.touches[0].clientY-y0; if(dy>0){ sh.classList.add('dragging'); sh.style.transform=`translateY(${dy}px)`; } }, {passive:true});
+  sh.addEventListener('touchend', ()=>{ if(y0==null) return; y0=null; sh.classList.remove('dragging'); sh.style.transform=''; if(dy>110) closeSheetUI(); dy=0; });
 }
 function closeTopSheet(){
   const e=sheetStack.pop(); if(!e) return;
@@ -383,18 +398,26 @@ document.addEventListener('keydown', e=>{
     if(e.shiftKey && document.activeElement===first){ e.preventDefault(); last.focus(); } else if(!e.shiftKey && document.activeElement===last){ e.preventDefault(); first.focus(); } }
 });
 
+function splitPl(x){ const m=String(x).match(/^(.*?)\s*\(([^()]*)\)\s*$/); return m?[m[1],'('+m[2]+')']:[x,'']; }
 function detailHTML(a){
   const s=S.settings; const fav=S.favs.includes(a.id);
   const hist = S.log.filter(e=>e.a===a.id).sort((x,y)=>y.d.localeCompare(x.d));
   const ages = `${Math.floor(a.a[0]/12)?'':''}${a.a[0]}–${a.a[1]} months`;
-  return `<div class="d-head">${art(a,'d-art')}<div><p class="small muted">${ages}</p><h2 class="st" id="d-title" tabindex="-1">${esc(a.t)}</h2></div></div>
+  const head = a.img
+    ? `<figure class="d-hero"><img src="${imgSrc(a)}" alt="${esc(a.alt||'')}" width="600" height="450" decoding="async"></figure><p class="small muted" style="margin-top:14px">${ages}</p><h2 class="st" id="d-title" tabindex="-1"${a.tags.includes('polish')?' lang="pl"':''}>${esc(a.t)}</h2>`
+    : `<div class="d-head">${art(a,'d-art')}<div><p class="small muted">${ages}</p><h2 class="st" id="d-title" tabindex="-1">${esc(a.t)}</h2></div></div>`;
+  const words = a.wd ? `<div class="d-sec lyrics"><h3>Words <span class="muted small">· po polsku</span></h3><p lang="pl">${a.wd.split(' / ').map(esc).join('<br>')}</p>${a.en?`<p class="gloss"><b>In English:</b> ${esc(a.en)}</p>`:''}</div>` : '';
+  const plBox = (s.polish && (a.pl||a.plp) && !a.wd) ? `<div class="d-sec pl-box"><span class="muted small">Po polsku</span>${a.pl?`<p><span class="muted small">Words</span> <b lang="pl">${esc(splitPl(a.pl)[0])}</b> <span class="muted small">${esc(splitPl(a.pl)[1])}</span></p>`:''}${a.plp?`<p><span class="muted small">Say</span> <b lang="pl">${esc(splitPl(a.plp)[0])}</b> <span class="muted small">${esc(splitPl(a.plp)[1])}</span></p>`:''}</div>` : (a.wd && a.plp && s.polish ? `<div class="d-sec pl-box"><span class="muted small">Say</span> <b lang="pl">${esc(splitPl(a.plp)[0])}</b> <span class="muted small">${esc(splitPl(a.plp)[1])}</span></div>` : '');
+  return `${head}
   <div style="margin-top:12px">${metaHTML(a,true)}</div>
+  <a class="btn btn-tonal watch" href="${ytURL(a)}" target="_blank" rel="noopener noreferrer">${ic('play')}Watch an example<span class="vh"> (opens YouTube search in a new tab)</span></a>
   <div class="d-sec"><h3>You'll need</h3><p>${esc(a.mat)}</p></div>
+  ${words}
   <div class="d-sec"><h3>How to</h3><ol class="steps">${a.s.map(x=>`<li><span>${fill(x)}</span></li>`).join('')}</ol></div>
   <div class="d-sec why-box">${ic('sparkle')}<p><b>Why it helps.</b> ${fill(a.w)}</p></div>
   <div class="d-sec vary"><div><b>Make it easier</b>${fill(a.ez)}</div><div><b>Make it harder</b>${fill(a.hd)}</div></div>
   ${a.sf?`<div class="d-sec safety" role="note">${ic('shield')}<p><b>Safety.</b> ${fill(a.sf)}</p></div>`:''}
-  ${s.polish && a.pl?`<div class="d-sec pl-box"><span class="muted small">Polish touch</span><br><b>${esc(a.pl)}</b></div>`:''}
+  ${plBox}
   <div class="d-sec"><h3>Helps with</h3><div class="tags">${a.d.map(d=>`<span class="tag" style="background:var(${AREAS[d].c})" title="EYFS: ${AREAS[d].e}">${AREAS[d].n}</span>`).join('')}</div>
   <p class="fine" style="margin-top:8px">EYFS areas: ${a.d.map(d=>AREAS[d].e).join(', ')}</p></div>
   ${hist.length?`<div class="d-sec"><h3>Your moments</h3><ul class="history">${hist.slice(0,5).map(e=>`<li>${parseD(e.d).toLocaleDateString('en-GB',{day:'numeric',month:'short'})} · ${e.min} min${e.note?` · “${esc(e.note)}”`:''}</li>`).join('')}</ul></div>`:''}`;
@@ -425,6 +448,21 @@ function openDone(id){
   openSheet(html, {label:'Save a moment', focus:'h2'});
 }
 
+/* ---------- Install ---------- */
+const IS_IOS = /iP(hone|od|ad)/.test(navigator.userAgent) || (navigator.platform==='MacIntel' && navigator.maxTouchPoints>1);
+const STANDALONE = () => navigator.standalone===true || matchMedia('(display-mode: standalone)').matches;
+const IOS_SAFARI = IS_IOS && /Safari/.test(navigator.userAgent) && !/CriOS|FxiOS|EdgiOS|OPiOS|GSA\//.test(navigator.userAgent);
+function showIosHint(){ return IOS_SAFARI && !STANDALONE() && !(S.hints&&S.hints.ios); }
+let deferredPrompt=null;
+window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; });
+window.addEventListener('appinstalled', ()=>{ deferredPrompt=null; });
+function installRowHTML(){
+  if(STANDALONE()) return '';
+  if(deferredPrompt) return `<div class="d-sec" id="install-row"><h3>Install</h3><div class="group"><button class="row-btn" data-act="install">${ic('plus')}Install Pebble on this phone</button></div><p class="fine">Opens full-screen from your home screen and works offline.</p></div>`;
+  if(IS_IOS) return `<div class="d-sec"><h3>Install</h3><p class="small">In Safari, tap <span class="share-glyph" aria-label="Share">${ic('share')}</span> Share, then <b>Add to Home Screen</b>.</p></div>`;
+  return '';
+}
+
 /* ---------- Settings ---------- */
 function settingsHTML(){
   const s=S.settings;
@@ -442,8 +480,9 @@ function settingsHTML(){
   </form>
   <div class="group" style="margin-top:20px">
     ${sw('allAges','Show ideas for every age','Includes ideas for older and younger children')}
-    ${sw('polish','Polish touch','Polish words and rhyme ideas on some activities')}
+    ${sw('polish','Polish at home','Polish rhymes & songs, and Polish words to say on everyday ideas')}
   </div>
+  ${installRowHTML()}
   <div class="d-sec"><h3>Your data</h3><div class="group">
     <button class="row-btn" data-act="export">${ic('download')}Export a backup</button>
     <label class="row-btn" style="cursor:pointer">${ic('upload')}Import a backup<input id="import-file" type="file" accept="application/json,.json" class="vh"></label>
@@ -460,7 +499,8 @@ function readSettingsForm(){
 }
 function applyTheme(){ const t=S.settings.theme; if(t==='system') document.documentElement.removeAttribute('data-theme'); else document.documentElement.setAttribute('data-theme',t);
   const dark = t==='dark' || (t==='system' && matchMedia('(prefers-color-scheme: dark)').matches);
-  document.querySelectorAll('meta[name="theme-color"]').forEach(m=>{ m.setAttribute('content', dark?'#171311':'#FBF7F2'); m.removeAttribute('media'); }); }
+  document.querySelectorAll('meta[name="theme-color"]').forEach(m=>{ m.setAttribute('content', dark?'#171311':'#FBF7F2'); m.removeAttribute('media'); });
+  const sb=document.querySelector('meta[name="apple-mobile-web-app-status-bar-style"]'); if(sb) sb.setAttribute('content', dark?'black':'default'); }
 
 /* ---------- Events ---------- */
 document.addEventListener('click', e=>{
@@ -493,13 +533,15 @@ document.addEventListener('click', e=>{
     case 'apply-filters': closeSheetUI(); return;
     case 'export': return exportData();
     case 'reset': if(confirm('Erase all settings, favourites and moments on this phone? This cannot be undone.')){ localStorage.removeItem(KEY); S=load(); applyTheme(); closeAllSheets(()=>{ render(); toast('Everything erased'); }); } return;
+    case 'dismiss-ios': S.hints={...(S.hints||{}), ios:true}; save(); t.closest('.install-hint')?.remove(); return;
+    case 'install': if(deferredPrompt){ deferredPrompt.prompt(); deferredPrompt.userChoice.finally(()=>{ deferredPrompt=null; const r=$('#install-row'); if(r) r.remove(); }); } return;
     case 'skip-welcome': S.settings.onboarded=true; save(); return setTab('today');
   }
 });
 function closeAllSheets(then){ const n=sheetStack.length; if(!n){ if(then) then(); return; } afterClose=then||null; history.go(-n); }
 document.addEventListener('submit', e=>{
   e.preventDefault(); const f=e.target;
-  if(f.id==='welcome-form'){ S.settings.child=f.child.value.trim(); S.settings.birth=f.birth.value; S.settings.parents=[f.p1.value.trim(), '']; S.settings.onboarded=true; save(); setTab('today'); toast('Welcome to Pebble'); }
+  if(f.id==='welcome-form'){ S.settings.child=f.child.value.trim(); S.settings.birth=f.birth.value; S.settings.parents=[f.p1.value.trim(), '']; S.settings.polish=!!(f.polish&&f.polish.checked); S.settings.onboarded=true; save(); setTab('today'); toast('Welcome to Pebble'); }
   if(f.id==='done-form'){
     const id=f.dataset.id; const minB=f.querySelector('[data-min][aria-checked="true"]'); const whoB=f.querySelector('[data-who][aria-checked="true"]');
     S.log.push({id:'m'+Date.now().toString(36)+Math.random().toString(36).slice(2,6), a:id, d:dkey(), ts:new Date().toISOString(), min: minB?+minB.dataset.min:BY_ID[id].m, who: whoB?whoB.dataset.who:'', note: f.note.value.trim().slice(0,140)});

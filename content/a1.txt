@@ -9,6 +9,7 @@ why: Following their lead and naming what they do is serve-and-return in its sim
 easier: Just describe. No questions.
 harder: Add one new word each time: "The red car is going fast."
 pl: bawimy się (we're playing)
+plp: Co robisz? Jedzie autko! (What are you doing? The car is going!)
 
 ## Picture-book detectives
 18-48 | 10 | low | bedtime,indoors | Any picture book | lit,cl |
@@ -21,6 +22,7 @@ why: Talking about pictures builds vocabulary as much as reading the text does.
 easier: Point and name things yourself, slowly.
 harder: Ask "What happens next?" before you turn the page.
 pl: gdzie jest…? (where is…?)
+plp: Gdzie jest piesek? Pokaż! (Where is the dog? Show me!)
 
 ## The same book, three ways
 24-48 | 10 | low | bedtime | A favourite book | lit,cl |
@@ -31,6 +33,8 @@ pl: gdzie jest…? (where is…?)
 why: Repetition and rhyme help toddlers predict words, an early reading skill.
 easier: Do just the silly voice.
 harder: Let them "read" it to you from the pictures.
+pl: książka, strona (book, page)
+plp: Przewróć stronę. (Turn the page.)
 
 ## Two choices
 18-48 | 5 | low | indoors,kitchen,onthego | None | cl,pse |
@@ -42,6 +46,7 @@ why: Choices give toddlers words and a little control, which helps with big feel
 easier: Hold the actual objects so they can point.
 harder: Offer three, or ask why they picked it.
 pl: to czy to? (this or this?)
+plp: Jabłko czy banan? (Apple or banana?)
 
 ## Feelings faces
 24-48 | 10 | low | indoors,bedtime | A mirror (optional) | pse,cl |
@@ -53,6 +58,7 @@ why: Naming feelings is the first step to managing them.
 easier: Stick to happy and sad.
 harder: Ask "What makes you feel happy?"
 pl: wesoły, smutny (happy, sad)
+plp: Jak się czujesz? (How do you feel?)
 
 ## Where's teddy hiding?
 18-36 | 10 | med | indoors | A soft toy | utw,cl,math |
@@ -64,6 +70,7 @@ why: Hiding games build memory and position words like under, behind and in.
 easier: Hide teddy while they watch.
 harder: Hide him in another room and give two-step clues.
 pl: pod, na, w (under, on, in)
+plp: Gdzie jest miś? Pod poduszką! (Where is teddy? Under the cushion!)
 
 ## Pots and pans band
 18-36 | 10 | high | kitchen,indoors | Pots, wooden spoons, a plastic tub | ead,cl,pd | rainy
@@ -75,6 +82,7 @@ why: Noisy play builds listening skills and sound words, and it's a turn-taking 
 easier: Just bang together and cheer.
 harder: Play a pattern (loud-quiet-loud) for them to copy.
 pl: głośno, cicho (loud, quiet)
+plp: Bum, bum! Teraz cichutko. (Boom, boom! Now very quietly.)
 
 ## Sock puppets
 24-48 | 20 | low | indoors | A clean odd sock | ead,cl,pse | rainy
@@ -85,6 +93,8 @@ pl: głośno, cicho (loud, quiet)
 why: Children often talk more to a puppet than to a grown-up.
 easier: Puppet just says hello and gives kisses.
 harder: Act out a tiny story: puppet is hungry, what shall we feed it?
+pl: skarpetka, buzia (sock, mouth)
+plp: Cześć! Jak masz na imię? (Hi! What is your name?)
 
 ## Tidy-up song
 18-36 | 5 | med | indoors | Toys to tidy | pse,cl |
@@ -95,6 +105,8 @@ harder: Act out a tiny story: puppet is hungry, what shall we feed it?
 why: Turning a routine into a game builds cooperation without a battle.
 easier: You tidy, they post things into the box.
 harder: Sort as you go: cars in one box, blocks in another.
+pl: zabawki, koszyk (toys, basket)
+plp: Sprzątamy! Do koszyka. (We are tidying! Into the basket.)
 
 ## Washing-basket boat
 18-36 | 10 | med | indoors | Empty laundry basket, a cushion | ead,pse | rainy
@@ -106,6 +118,8 @@ why: Pretend play is how toddlers practise ideas and words for later.
 easier: Just rock and sing "Row, row, row your boat".
 harder: Let them decide where the boat is going and what's there.
 safety: Push only on carpet, gently, and stay close.
+pl: łódka, woda (boat, water)
+plp: Płyniemy! Trzymaj się. (We are sailing! Hold on.)
 
 ## Sorting socks
 24-48 | 10 | low | indoors | Clean laundry | math,cl |
@@ -117,6 +131,7 @@ why: Matching and sorting are the start of maths thinking.
 easier: Sort into two piles: big and little.
 harder: Sort by colour, then count each pile.
 pl: duży, mały (big, small)
+plp: Gdzie jest para? (Where is the pair?)
 
 ## Shadow animals
 24-48 | 10 | low | bedtime | A torch or phone light | ead,utw,cl |
@@ -128,6 +143,8 @@ why: Playing with light and shadow sparks curiosity about how things work.
 easier: Wiggle fingers and make a "spider" shadow.
 harder: Ask them to make shadows big or small by moving closer.
 safety: Check the battery cover is closed; button batteries are dangerous.
+pl: cień, zajączek (shadow, bunny)
+plp: Kto to jest? Zajączek! (Who is that? A bunny!)
 
 ## Phone call to Grandma (pretend)
 24-48 | 5 | low | indoors,onthego | A toy phone, block or remote | cl,pse |
@@ -138,6 +155,8 @@ safety: Check the battery cover is closed; button batteries are dangerous.
 why: Pretending one object is another is an important thinking milestone around 2 and a half.
 easier: Just say hello and goodbye back and forth.
 harder: Pretend to order a pizza and let them take the order.
+pl: telefon, babcia (phone, grandma)
+plp: Halo? Cześć, babciu! (Hello? Hi, Grandma!)
 
 ## Name it at the window
 18-36 | 5 | low | indoors | A window | cl,utw | rainy
@@ -149,6 +168,7 @@ why: Noticing what they look at and naming it is serve-and-return.
 easier: Just wave at cars and people.
 harder: Play "I spy" with colours.
 pl: deszcz, słońce (rain, sun)
+plp: Co widzisz? (What can you see?)
 
 ## Cuddle and remember
 24-48 | 5 | low | bedtime | None | pse,cl |
@@ -160,6 +180,7 @@ why: Talking about the day builds memory and a calm, predictable ending.
 easier: You tell the story of their day; they listen.
 harder: Ask about a tricky bit too, and what helped.
 pl: dobranoc (good night)
+plp: Co było dzisiaj najfajniejsze? (What was the best bit today?)
 
 ## Wake-up yoga
 18-48 | 5 | med | indoors,bedtime | None | pd,pse |
@@ -170,6 +191,8 @@ pl: dobranoc (good night)
 why: Slow movement helps body awareness and calming down.
 easier: Just tall and small.
 harder: Balance on one foot like a flamingo.
+pl: drzewo, wysoko, nisko (tree, high, low)
+plp: Rośniemy jak drzewo! (We are growing like a tree!)
 
 ## Blanket fort story
 24-48 | 30 | low | indoors | Blanket, chairs or sofa cushions, a torch, books | lit,ead,pse | rainy,weekend
@@ -181,6 +204,8 @@ why: A special reading place makes books feel like an adventure.
 easier: Drape a blanket over the table. Done.
 harder: Let them decide the den rules and give it a name.
 safety: Keep heavy cushions off the top so nothing can fall on them.
+pl: namiot, latarka (tent, torch)
+plp: Wchodzimy do namiotu! (Into the den!)
 
 ## Hello, body!
 18-36 | 5 | med | indoors,bath | None | cl,pd |
@@ -192,6 +217,7 @@ why: Pointing to body parts is a 2-year language milestone, and songs make it st
 easier: Just touch noses and toes.
 harder: Name elbows, eyebrows and ankles.
 pl: głowa, ramiona, kolana, pięty (head, shoulders, knees, heels)
+plp: Gdzie są kolana? (Where are your knees?)
 
 ## Copy me
 18-36 | 5 | med | indoors,onthego | None | pd,pse |
@@ -202,6 +228,8 @@ pl: głowa, ramiona, kolana, pięty (head, shoulders, knees, heels)
 why: Copying builds attention and the back-and-forth of conversation.
 easier: One action at a time.
 harder: Two actions in a row: clap then stamp.
+pl: klaskać, tupać (clap, stamp)
+plp: Zrób tak jak ja! (Do it like me!)
 
 ## Story of me
 24-48 | 10 | low | bedtime,indoors | A few printed photos (optional) | pse,cl,lit |
@@ -222,6 +250,8 @@ harder: Let them choose what happens next.
 why: Whispering slows everyone down and is great listening practice.
 easier: Whisper their name.
 harder: Whisper two-word messages.
+pl: szept, cicho (whisper, quiet)
+plp: Powiedz cichutko. (Say it very quietly.)
 
 ## Animal sounds guessing
 18-36 | 5 | low | onthego,indoors | None | cl,utw |
@@ -232,6 +262,8 @@ harder: Whisper two-word messages.
 why: Sound words are some of the first words toddlers can say.
 easier: Use the animals in their favourite book.
 harder: Ask where the animal lives.
+pl: krowa, pies, kot (cow, dog, cat)
+plp: Jak robi krowa? Muuu! (What does the cow say? Moo!)
 
 ## Tummy-time talk (at any age)
 18-36 | 5 | low | indoors | None | cl,pse |
@@ -252,6 +284,8 @@ harder: Tell a tiny story about something you can see.
 why: Waiting for the word builds anticipation and gets them talking.
 easier: Just do it together with lots of excitement.
 harder: Add "stop!" in the middle.
+pl: start (go)
+plp: Do biegu, gotowi, start! (Ready, steady, go!)
 
 ## Kind hands
 24-48 | 10 | low | indoors | A teddy or doll | pse |
@@ -262,3 +296,5 @@ harder: Add "stop!" in the middle.
 why: Around 2, children start noticing when others are upset; practising care builds empathy.
 easier: You show the cuddle; they copy.
 harder: Teddy is sad because he lost his toy. What could we do?
+pl: miś, boli (teddy, it hurts)
+plp: Pogłaszcz misia delikatnie. (Stroke teddy gently.)

@@ -9,6 +9,8 @@ why: Climbing and crawling build strength and balance, and position words come f
 easier: A line of cushions to walk along.
 harder: Add rules: hop on red cushions, tiptoe on blue.
 safety: Clear hard edges and stay close by.
+pl: poduszka, skok (cushion, jump)
+plp: Hop na poduszkę! (Hop onto the cushion!)
 
 ## Freeze dance
 18-48 | 10 | high | indoors | Music (or just your voice) | pd,ead,pse | rainy
@@ -19,6 +21,8 @@ safety: Clear hard edges and stay close by.
 why: Stopping and starting on cue builds self-control, an early executive skill.
 easier: Dance holding hands, freeze together.
 harder: Freeze in a shape: a star, a cat, a tree.
+pl: tańczymy, stop (we dance, stop)
+plp: Tańczymy… stop! Nie ruszaj się. (Dance… stop! Do not move.)
 
 ## Animal walks
 18-48 | 10 | high | indoors,outdoors | None | pd,utw |
@@ -29,6 +33,8 @@ harder: Freeze in a shape: a star, a cat, a tree.
 why: Different movements build balance, coordination and strength.
 easier: Stick to stomping and tiptoeing.
 harder: Call out animals for them to switch between fast.
+pl: słoń, żaba (elephant, frog)
+plp: Idziemy jak słoń: tup, tup! (Walk like an elephant: stomp, stomp!)
 
 ## Lily pad hop
 24-48 | 10 | high | indoors | Paper, cushions or tea towels | pd,ead |
@@ -40,6 +46,8 @@ why: Jumping with both feet is a skill most children reach around 2 and a half.
 easier: Step from pad to pad, holding your hand.
 harder: Count the jumps as you go.
 safety: Use tea towels only on carpet, not slippery floors.
+pl: żabka, skacz (frog, jump)
+plp: Skacz jak żabka! (Jump like a frog!)
 
 ## Follow the leader
 24-48 | 10 | high | outdoors,indoors | None | pd,pse |
@@ -50,6 +58,8 @@ safety: Use tea towels only on carpet, not slippery floors.
 why: Leading and following teaches turn-taking and body control.
 easier: Hold hands and march together.
 harder: Add sounds to each move.
+pl: za mną (after me)
+plp: Chodź za mną! (Follow me!)
 
 ## Ball roll and kick
 18-36 | 10 | high | outdoors,indoors | A soft ball | pd,pse |
@@ -61,6 +71,7 @@ why: Kicking a ball is a 2-year milestone; rolling back and forth is a turn-taki
 easier: Roll only, sitting close.
 harder: Kick into a "goal" between two shoes.
 pl: piłka (ball)
+plp: Turlaj piłkę do mnie! (Roll the ball to me!)
 
 ## Bubble chase
 18-36 | 10 | high | outdoors,bath | Washing-up liquid and water, or bubbles | pd,utw |
@@ -72,6 +83,8 @@ why: Tracking and reaching for bubbles builds hand-eye coordination.
 easier: Blow bubbles low so they can reach.
 harder: Pop only with a finger, or only with a clap.
 safety: Keep bubble mix away from eyes and mouth.
+pl: bańki (bubbles)
+plp: Złap bańkę! (Catch a bubble!)
 
 ## Puddle walk
 18-48 | 20 | high | outdoors | Wellies and waterproofs | pd,utw | rainy,autumn,winter
@@ -84,6 +97,7 @@ easier: Walk around the edges and stamp.
 harder: Guess which puddle is deepest, then test with a stick.
 safety: Keep away from roads and deep or moving water.
 pl: kałuża (puddle)
+plp: Hop do kałuży! Chlap! (Hop into the puddle! Splash!)
 
 ## Leaf collecting
 18-48 | 20 | med | outdoors | A bag or pocket | utw,math,cl | autumn
@@ -95,6 +109,7 @@ why: Collecting and comparing are early science and maths.
 easier: Just crunch through leaves together.
 harder: Find a leaf to match one you show them.
 pl: liść (leaf)
+plp: Jaki to kolor? (What colour is it?)
 
 ## Stick, stone, leaf
 24-48 | 20 | med | outdoors | None | utw,math |
@@ -106,6 +121,8 @@ why: Hunting and naming textures builds descriptive words.
 easier: Find just one thing at a time.
 harder: Find three of the same thing and count them.
 safety: Under 3s: only stones bigger than their fist, and watch for mouthing.
+pl: patyk, kamień, liść (stick, stone, leaf)
+plp: Znajdź patyk! (Find a stick!)
 
 ## Seafront wind walk
 18-48 | 20 | med | outdoors | Warm coat | utw,cl,pd | seaside
@@ -118,6 +135,7 @@ easier: Do a short stretch and count gulls.
 harder: Ask "Where do you think the boat is going?"
 safety: Hold hands near steps, groynes and the water's edge.
 pl: morze, mewa (sea, gull)
+plp: Słyszysz morze? (Can you hear the sea?)
 
 ## Pebble sorting on the beach
 24-48 | 20 | low | outdoors | None | math,utw | seaside
@@ -130,6 +148,7 @@ easier: Just find "big" and "little".
 harder: Find pebbles that match a colour you name.
 safety: Under 3s: only pebbles bigger than their fist, and supervise mouthing.
 pl: kamień (stone)
+plp: Duży czy mały kamień? (Big or small stone?)
 
 ## Beach pebble tower
 24-48 | 10 | low | outdoors | None | pd,math | seaside
@@ -141,6 +160,8 @@ why: Stacking takes careful hand control and lots of tries.
 easier: Two-pebble towers.
 harder: Who can build taller? Take turns adding one.
 safety: Large pebbles only for under 3s.
+pl: wieża, kamień (tower, stone)
+plp: Jeszcze jeden kamień! (One more stone!)
 
 ## Wave chasing
 24-48 | 10 | high | outdoors | Wellies in cool weather | pd,utw,pse | seaside,summer
@@ -152,6 +173,8 @@ why: Big laughter and a bit of thrill, safely shared, builds trust.
 easier: Watch from further back and shout "here it comes!"
 harder: Count the waves.
 safety: Hold hands the whole time. Only on calm days, never alone near the sea.
+pl: fala, morze (wave, sea)
+plp: Uciekamy przed falą! (Run from the wave!)
 
 ## Sea sounds
 18-48 | 5 | low | outdoors | None | utw,cl | seaside
@@ -172,6 +195,8 @@ harder: Count how many different sounds you heard.
 why: Climbing and swinging build strength, balance and confidence.
 easier: Small slide and low steps only.
 harder: Let them try a slightly bigger climb while you spot.
+pl: zjeżdżalnia, huśtawka (slide, swing)
+plp: Wejdź na górę! (Climb up!)
 
 ## Nature hunt bag
 24-48 | 20 | med | outdoors | A paper bag | utw,cl,math | weekend
@@ -183,6 +208,8 @@ why: A clear little mission keeps toddlers walking and talking.
 easier: Find anything they like.
 harder: Find something soft, something rough, something smooth.
 safety: Wash hands after; no berries or mushrooms in mouths.
+pl: piórko, liść, patyk (feather, leaf, stick)
+plp: Mamy już piórko! (We have a feather!)
 
 ## Chalk drawing
 24-48 | 20 | med | outdoors | Chalk (optional) | ead,pd | summer
@@ -193,6 +220,8 @@ safety: Wash hands after; no berries or mushrooms in mouths.
 why: Copying a line, then a circle, comes before writing.
 easier: Make scribbles and dots together.
 harder: Draw a road for a toy car.
+pl: kreda, koło (chalk, circle)
+plp: Narysuj koło. (Draw a circle.)
 
 ## Water painting
 18-48 | 20 | low | outdoors | A cup of water and a paintbrush or sponge | ead,pd,utw | summer
@@ -204,6 +233,8 @@ why: Big brush strokes build arm strength, and disappearing water is science.
 easier: Use a sponge instead of a brush.
 harder: Paint letters or shapes and watch them vanish.
 safety: Supervise around any water.
+pl: pędzel, woda (brush, water)
+plp: Maluj wodą! (Paint with water!)
 
 ## Garden digger
 24-48 | 20 | med | outdoors | A spoon or trowel, a pot | utw,pd |
@@ -215,6 +246,8 @@ why: Digging is real-world science and great for little muscles.
 easier: Fill and empty a pot.
 harder: Plant a seed or bulb together and water it.
 safety: Wash hands afterwards.
+pl: ziemia, łopatka (soil, spade)
+plp: Kopiemy dołek! (We are digging a hole!)
 
 ## Bus window game
 24-48 | 10 | low | onthego | None | cl,utw,math |
@@ -225,6 +258,8 @@ safety: Wash hands afterwards.
 why: Waiting time becomes talking time.
 easier: Name what passes by.
 harder: "I spy something red."
+pl: autobus, auto (bus, car)
+plp: Co jedzie? Autobus! (What is coming? A bus!)
 
 ## Waiting-room I spy
 24-48 | 5 | low | onthego | None | cl,math |
@@ -256,6 +291,8 @@ pl: Sroczka kaszkę warzyła (Polish palm rhyme)
 why: Real jobs make toddlers feel capable and give rich words.
 easier: Let them hold one item for the whole shop.
 harder: Find something yellow, something cold.
+pl: banany, koszyk (bananas, basket)
+plp: Gdzie są banany? (Where are the bananas?)
 
 ## Car song swap
 18-48 | 10 | low | onthego | None | cl,ead |

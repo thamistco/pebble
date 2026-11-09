@@ -2,6 +2,7 @@
   "name": "Pebble · little moments together",
   "short_name": "Pebble",
   "description": "Screen-free ideas for twenty minutes a day with your toddler.",
+  "id": "./",
   "start_url": "./#today",
   "scope": "./",
   "display": "standalone",
