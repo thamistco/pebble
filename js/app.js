@@ -5,7 +5,7 @@ const DATA = window.PEBBLE_DATA;
 const ACTS = DATA.activities;
 const BY_ID = Object.fromEntries(ACTS.map(a=>[a.id,a]));
 const KEY = 'pebble.v1';
-const VERSION = '2.1.0';
+const VERSION = '2.2.0';
 
 /* ---------- Icons (inline SVG, 24px grid, stroke) ---------- */
 const P = {
@@ -83,6 +83,8 @@ const clone = o => JSON.parse(JSON.stringify(o));
 const isDate = v => typeof v==='string' && /^\d{4}-\d\d-\d\d$/.test(v) && !isNaN(Date.parse(v+'T00:00:00Z')) && new Date(v+'T00:00:00Z').toISOString().slice(0,10)===v;
 const str = (v,max) => (typeof v==='string'?v:(typeof v==='number'?String(v):'')).slice(0,max);
 /* Normalise anything (old versions, hand-edited or corrupted storage, imported files) into a valid state */
+const RENAMED = {'kosi-kosi-apci-clapping':'kosi-kosi-lapci-clapping'};   /* old id → current id, so saved favourites and moments follow a renamed idea */
+const rid = id => (typeof id==='string' && RENAMED[id]) || id;
 function normalize(raw){
   const d = clone(DEFAULTS); if(!raw || typeof raw!=='object' || Array.isArray(raw)) return d;
   const rs = (raw.settings && typeof raw.settings==='object') ? raw.settings : {}; const s=d.settings;
@@ -92,9 +94,9 @@ function normalize(raw){
   s.allAges = rs.allAges===true; s.polish = rs.polish===true; s.onboarded = rs.onboarded===true;
   s.theme = ['system','light','dark'].includes(rs.theme) ? rs.theme : 'system';
   s.goal = [10,20,30].includes(+rs.goal) ? +rs.goal : 20;
-  d.favs = Array.isArray(raw.favs) ? [...new Set(raw.favs.filter(id=>typeof id==='string' && BY_ID[id]))] : [];
+  d.favs = Array.isArray(raw.favs) ? [...new Set(raw.favs.map(rid).filter(id=>typeof id==='string' && BY_ID[id]))] : [];
   const seen = new Set();
-  d.log = (Array.isArray(raw.log) ? raw.log : []).filter(e=>e && typeof e==='object' && BY_ID[e.a] && isDate(e.d)).map((e,i)=>{
+  d.log = (Array.isArray(raw.log) ? raw.log : []).filter(e=>e && typeof e==='object' && BY_ID[rid(e.a)] && isDate(e.d)).map((e,i)=>{ e={...e, a:rid(e.a)};
     let id = str(e.id,40) || ('m'+i+'x'+e.d.replace(/-/g,'')); while(seen.has(id)) id += 'x'; seen.add(id);
     const min = Math.round(+e.min); const ts = (typeof e.ts==='string' && !isNaN(Date.parse(e.ts))) ? e.ts : e.d+'T12:00:00.000Z';
     return {id, a:e.a, d:e.d, ts, min: (min>0 && min<=600) ? min : BY_ID[e.a].m, who: str(e.who,40), note: str(e.note,140)};
@@ -132,7 +134,28 @@ function ageLabel(m){ if(m==null) return ''; if(m<0) return 'not born yet'; if(m
 function greeting(){ const h=new Date().getHours(); return h<12?'Good morning':h<18?'Good afternoon':'Good evening'; }
 function lastDone(id){ let best=null; for(const e of S.log){ if(e.a===id && (!best||e.d>best)) best=e.d; } return best; }
 function timesDone(id){ return S.log.filter(e=>e.a===id).length; }
-let toastT; function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),2600); }
+/* Toast: a small status strip that never covers buttons. With no sheet open it docks to the top edge of the tab bar;
+   inside a sheet it sits in the flow just above the sheet's buttons. Tap or swipe it away; screen readers hear it (role=status). */
+let toastT, toastAt=0;
+function hideToast(){ const t=$('#toast'); if(!t) return; clearTimeout(toastT); t.classList.remove('show'); document.body.classList.remove('toast-on'); }
+{ const t=$('#toast');
+  t.addEventListener('click', e=>{ e.stopPropagation(); hideToast(); });   /* in a sheet: tap to dismiss */
+  let tx=null; t.addEventListener('touchstart', e=>{ e.stopPropagation(); tx=e.touches[0]; }, {passive:true});
+  t.addEventListener('touchmove', e=>{ e.stopPropagation(); }, {passive:true});
+  t.addEventListener('touchend', e=>{ e.stopPropagation(); const c=e.changedTouches[0]; if(tx && Math.hypot(c.clientX-tx.clientX, c.clientY-tx.clientY)>16) hideToast(); tx=null; });
+  /* docked above the tab bar it lets taps through, and any tap or scroll elsewhere tucks it away */
+  const away=e=>{ if(t.classList.contains('show') && !t.classList.contains('in-sheet') && !t.contains(e.target)) hideToast(); };
+  document.addEventListener('pointerdown', away, true); window.addEventListener('scroll', ()=>{ if(Date.now()-toastAt>500 && t.classList.contains('show') && !t.classList.contains('in-sheet')) hideToast(); }, {passive:true}); }
+function toast(msg){
+  const t=$('#toast'); const top=sheetStack.length?sheetStack[sheetStack.length-1]:null;
+  clearTimeout(toastT);
+  if(top && !top.closing){ const foot=top.sh.querySelector('.sheet-foot'); const host=top.sh;
+    if(t.parentNode!==host || t.nextSibling!==foot) host.insertBefore(t, foot||null); t.className='in-sheet'; }
+  else { if(t.parentNode!==document.body) document.body.append(t); const bar=document.querySelector('.tabbar'); const shown=bar && !bar.hidden && getComputedStyle(bar).display!=='none';
+    t.className=shown?'':'no-tabs'; if(shown) t.style.setProperty('--toast-b', bar.getBoundingClientRect().height+'px'); document.body.classList.add('toast-on'); }
+  void t.offsetHeight; t.classList.add('show'); t.textContent=msg; toastAt=Date.now();
+  toastT=setTimeout(hideToast, Math.min(3500, 1500+msg.length*35));
+}
 
 /* ---------- Eligibility & picks ---------- */
 const MIN_AGE=18, MAX_AGE=48;
@@ -199,7 +222,7 @@ function art(a, cls='art'){
   const area = AREAS[a.d[0]]; const pl = PLACES[a.p[0]];
   return `<svg class="${cls}" viewBox="0 0 100 100" aria-hidden="true"><path d="${pebblePath(hash(a.id))}" fill="var(${area.c})"/><g transform="translate(34 34) scale(1.33)" fill="none" stroke="var(--a-ink)" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" opacity=".85">${P[pl.i]}</g></svg>`;
 }
-function imgSrc(a){ return a.img ? `img/${a.id}.webp` : ''; }
+function imgSrc(a){ return a.img ? `img/${a.id}.webp${a.img>1?'?v='+a.img:''}` : ''; }
 function thumb(a, cls='thumb'){ return a.img ? `<img class="${cls}" src="${imgSrc(a)}" alt="${esc(a.alt||a.t)}" width="600" height="450" loading="lazy" decoding="async">` : art(a); }
 function ytURL(a){ return 'https://www.youtube.com/results?search_query='+encodeURIComponent(a.yt || (a.t+' toddler activity')); }
 function heroArt(){
@@ -399,6 +422,8 @@ function openSheet(html, opts={}){
   const opened=Date.now(); scrim.addEventListener('click', ()=>{ if(Date.now()-opened<450) return; closeSheetUI(); });   /* a double tap must not close what the first tap opened */
   const prevSel = prev && prev.dataset ? ['act','open','tab','quick','coll'].map(k=>prev.dataset[k]!=null?`[data-${k}="${CSS.escape(prev.dataset[k])}"]`:'').join('') : '';
   const entry={sh,scrim,prev,prevSel,onClose:opts.onClose,name:opts.name};
+  if(top){ top.sh.classList.add('under'); scrim.classList.add('stacked'); }   /* one sheet on screen at a time: the one below slides away and comes back when this closes */
+  hideToast();
   sheetStack.push(entry);
   document.body.classList.add('sheet-open'); $('#app').inert=true;   /* the page behind a sheet can't be focused, tapped or read out */
   history.pushState({sheet:sheetStack.length}, '');
@@ -415,7 +440,9 @@ function enableDragClose(sh){
 }
 function closeTopSheet(){
   const e=sheetStack.pop(); if(!e) return;
+  if(e.sh.contains($('#toast'))){ hideToast(); document.body.append($('#toast')); }
   e.sh.classList.remove('open'); e.scrim.classList.remove('open');
+  const below=sheetStack[sheetStack.length-1]; if(below) below.sh.classList.remove('under');
   const rm=()=>{ e.sh.remove(); e.scrim.remove(); };
   if(matchMedia('(prefers-reduced-motion: reduce)').matches) rm(); else setTimeout(rm, 280);
   if(!sheetStack.length){ document.body.classList.remove('sheet-open'); $('#app').inert=false; }
@@ -443,8 +470,8 @@ function detailHTML(a){
   const head = a.img
     ? `<figure class="d-hero"><img src="${imgSrc(a)}" alt="${esc(a.alt||'')}" width="600" height="450" decoding="async"></figure><p class="small muted" style="margin-top:14px">${ages}</p><h2 class="st" id="d-title" tabindex="-1"${a.tags.includes('polish')?' lang="pl"':''}>${esc(a.t)}</h2>`
     : `<div class="d-head">${art(a,'d-art')}<div><p class="small muted">${ages}</p><h2 class="st" id="d-title" tabindex="-1">${esc(a.t)}</h2></div></div>`;
-  const words = a.wd ? `<div class="d-sec lyrics"><h3>Words <span class="muted small">· po polsku</span></h3><p lang="pl">${a.wd.split(' / ').map(esc).join('<br>')}</p>${a.en?`<p class="gloss"><b>In English:</b> ${esc(a.en)}</p>`:''}</div>` : '';
-  const plBox = (s.polish && (a.pl||a.plp) && !a.wd) ? `<div class="d-sec pl-box"><span class="muted small">Po polsku</span>${a.pl?`<p><span class="muted small">Words</span> <b lang="pl">${esc(splitPl(a.pl)[0])}</b> <span class="muted small">${esc(splitPl(a.pl)[1])}</span></p>`:''}${a.plp?`<p><span class="muted small">Say</span> <b lang="pl">${esc(splitPl(a.plp)[0])}</b> <span class="muted small">${esc(splitPl(a.plp)[1])}</span></p>`:''}</div>` : (a.wd && a.plp && s.polish ? `<div class="d-sec pl-box"><span class="muted small">Say</span> <b lang="pl">${esc(splitPl(a.plp)[0])}</b> <span class="muted small">${esc(splitPl(a.plp)[1])}</span></div>` : '');
+  const words = a.wd ? `<div class="d-sec lyrics"><h3>Words <span class="muted small">· po polsku</span></h3><p lang="pl">${a.wd.split(' / ').map(esc).join('<br>')}</p>${a.en?`<p class="gloss"><b>In English:</b> ${esc(a.en)}</p>`:''}${a.pn?`<p class="pl-note">${esc(a.pn)}</p>`:''}</div>` : '';
+  const plBox = (s.polish && (a.pl||a.plp) && !a.wd) ? `<div class="d-sec pl-box"><span class="muted small">Po polsku</span>${a.pl?`<p><span class="muted small">Words</span> <b lang="pl">${esc(splitPl(a.pl)[0])}</b> <span class="muted small">${esc(splitPl(a.pl)[1])}</span></p>`:''}${a.plp?`<p><span class="muted small">Say</span> <b lang="pl">${esc(splitPl(a.plp)[0])}</b> <span class="muted small">${esc(splitPl(a.plp)[1])}</span></p>`:''}${a.pn?`<p class="pl-note">${esc(a.pn)}</p>`:''}</div>` : (a.wd && a.plp && s.polish ? `<div class="d-sec pl-box"><span class="muted small">Say</span> <b lang="pl">${esc(splitPl(a.plp)[0])}</b> <span class="muted small">${esc(splitPl(a.plp)[1])}</span></div>` : '');
   return `${head}
   <div style="margin-top:12px">${metaHTML(a,true)}</div>
   <a class="btn btn-tonal watch" href="${ytURL(a)}" target="_blank" rel="noopener noreferrer">${ic('play')}Watch an example<span class="vh"> (opens YouTube search in a new tab)</span></a>
@@ -635,9 +662,15 @@ setInterval(checkDay, 60000);
 let reg=null;
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){
   const hadController = !!navigator.serviceWorker.controller; let reloaded=false;
+  /* nothing open: reload now (the 'Updated' note shows after). A sheet open: wait until the app is next hidden with no sheet open, so nothing half-typed is lost */
+  let pendingReload=false;
   navigator.serviceWorker.addEventListener('controllerchange', ()=>{ if(!hadController || reloaded) return; reloaded=true;
-    if(!sheetStack.length) location.reload(); else toast('Pebble has updated. It will refresh next time you open it.'); });
+    if(!sheetStack.length) location.reload(); else pendingReload=true; });
+  document.addEventListener('visibilitychange', ()=>{ if(pendingReload && document.visibilityState==='hidden' && !sheetStack.length) location.reload(); });
   window.addEventListener('load', ()=>navigator.serviceWorker.register('sw.js').then(r=>{reg=r;}).catch(()=>{}));
 }
+/* A gentle note the first time a new version opens (not on a fresh install) */
+(function(){ const LV='pebble.lastVersion'; let prev=null; try{ prev=localStorage.getItem(LV); localStorage.setItem(LV, VERSION); }catch(_){}
+  if(prev!==VERSION && (prev || S.settings.onboarded)) setTimeout(()=>{ if(!sheetStack.length) toast('Updated to version '+VERSION); }, 600); })();
 window.__pebble = { get state(){return S;}, todaysPick, eligible, ACTS, sheets:()=>sheetStack.length, VERSION };
 })();

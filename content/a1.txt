@@ -205,7 +205,7 @@ easier: Drape a blanket over the table. Done.
 harder: Let them decide the den rules and give it a name.
 safety: Keep heavy cushions off the top so nothing can fall on them.
 pl: namiot, latarka (tent, torch)
-plp: Wchodzimy do namiotu! (Into the den!)
+plp: Wchodzimy do namiotu! (In we go, into the tent!)
 
 ## Hello, body!
 18-36 | 5 | med | indoors,bath | None | cl,pd |

@@ -259,6 +259,7 @@ easier: Sway and clap along.
 harder: Let them be the train driver and choose the stops.
 pl: pociąg (train)
 plp: Ciuchcia jedzie! Wsiadamy! (The choo-choo is coming! All aboard!)
+pn: "Ciuchcia" is the children's word for a train; "pociąg" is the everyday one.
 words: Jedzie pociąg z daleka, / ani chwili nie czeka. / Konduktorze łaskawy, / zabierz nas do Warszawy!
 en: The train is coming from far away, it doesn't wait a moment. Kind conductor, take us to Warsaw!
 
@@ -273,5 +274,6 @@ easier: Just clap and smile.
 harder: Clap faster, then slower.
 pl: łapki, babcia (little hands, grandma)
 plp: Klaszczemy! (Let's clap!)
-words: Kosi, kosi łapci, / pojedziem do babci. / Babcia da nam mleczka, / a dziadek jajeczka.
-en: Clap, clap little hands, we'll go to Grandma's. Grandma will give us milk, and Grandad an egg.
+words: Kosi, kosi łapci, / pojedziem do babci. / Babcia da nam mleczka, / dziadek cukiereczka.
+en: Clap, clap little hands, we'll go to Grandma's. Grandma will give us milk, and Grandad a sweetie.
+pn: Families vary: many sing "pojedziemy do babci", and the last line can be "a dziadek ciasteczka" (a biscuit) or a whole new verse.

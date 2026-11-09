@@ -6,7 +6,9 @@ def slug_pl(s):
     s = s.lower().replace('ł','l')
     s = unicodedata.normalize('NFKD', s).encode('ascii','ignore').decode()
     return slug(s)
-KEYS = {'why':'w','easier':'ez','harder':'hd','safety':'sf','pl':'pl','plp':'plp','words':'wd','en':'en'}
+KEYS = {'why':'w','easier':'ez','harder':'hd','safety':'sf','pl':'pl','plp':'plp','words':'wd','en':'en','pn':'pn'}
+ID_FIX = {'kosi-kosi-apci-clapping':'kosi-kosi-lapci-clapping'}   # slug lost its 'ł'; the app maps the old id on load
+IMG_REV = {'pebble-sorting-on-the-beach':2, 'beach-pebble-tower':2}   # bump when a picture is redrawn, so cached copies refresh
 imgs = {}
 for line in open(base+'/content/images.tsv', encoding='utf-8'):
     p = line.rstrip('\n').split('\t')
@@ -21,7 +23,7 @@ for f in sorted(glob.glob(base+'/content/a*.txt')):
         meta = [x.strip() for x in lines[1].split('|')]
         if len(meta) < 6: errs.append((title,'meta')); continue
         a0,a1 = map(int, meta[0].split('-'))
-        a = dict(id=slug(title) if legacy else slug_pl(title), t=title, a=[a0,a1], m=int(meta[1]), e=meta[2], p=meta[3].split(','),
+        a = dict(id=ID_FIX.get(slug(title), slug(title)) if legacy else slug_pl(title), t=title, a=[a0,a1], m=int(meta[1]), e=meta[2], p=meta[3].split(','),
                  mat=meta[4], d=meta[5].split(','), tags=[x for x in (meta[6].split(',') if len(meta)>6 else []) if x], s=[])
         for l in lines[2:]:
             l=l.strip()
@@ -42,7 +44,7 @@ for f in sorted(glob.glob(base+'/content/a*.txt')):
         if a['m'] not in [5,10,20,30]: errs.append((title,'min'))
         if a['id'] in imgs:
             alt, q = imgs[a['id']]
-            if os.path.exists(base+'/img/'+a['id']+'.webp'): a['img'] = 1
+            if os.path.exists(base+'/img/'+a['id']+'.webp'): a['img'] = IMG_REV.get(a['id'], 1)
             a['alt'] = alt; a['yt'] = q
         else: errs.append((title,'no image row'))
         acts.append(a)

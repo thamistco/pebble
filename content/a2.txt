@@ -71,7 +71,8 @@ why: Kicking a ball is a 2-year milestone; rolling back and forth is a turn-taki
 easier: Roll only, sitting close.
 harder: Kick into a "goal" between two shoes.
 pl: piłka (ball)
-plp: Turlaj piłkę do mnie! (Roll the ball to me!)
+plp: Poturlaj piłkę do mnie! (Roll the ball to me!)
+pn: "Turlaj…" (keep rolling) is just as common; "potocz" is the more formal word.
 
 ## Bubble chase
 18-36 | 10 | high | outdoors,bath | Washing-up liquid and water, or bubbles | pd,utw |
@@ -140,15 +141,15 @@ plp: Słyszysz morze? (Can you hear the sea?)
 ## Pebble sorting on the beach
 24-48 | 20 | low | outdoors | None | math,utw | seaside
 - Sit together on the pebbles.
-- Find a big pebble, a small pebble, a white one, a stripy one.
-- Make a line from smallest to biggest.
+- Find a big pebble, a bigger one, a white one, a stripy one.
+- Line them up from smallest to biggest.
 - Leave them on the beach when you go.
 why: Sorting by size and colour is early maths, and the beach is a free maths kit.
-easier: Just find "big" and "little".
+easier: Just find "big" and "bigger".
 harder: Find pebbles that match a colour you name.
 safety: Under 3s: only pebbles bigger than their fist, and supervise mouthing. In summer, sun hat and sun cream.
 pl: kamień (stone)
-plp: Duży czy mały kamień? (Big or small stone?)
+plp: Który kamień jest większy? (Which stone is bigger?)
 
 ## Beach pebble tower
 24-48 | 10 | low | outdoors | None | pd,math | seaside

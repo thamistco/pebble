@@ -23,6 +23,7 @@ why: Touching each finger in turn builds body awareness and early counting, and 
 easier: Just stir the palm and do "frrr!"
 harder: Let them be the magpie on your hand.
 pl: paluszek, rączka (little finger, little hand)
+pn: Some families start from the little finger and leave the thumb with nothing; either way works.
 
 ## Wspinał się pajączek
 18-48 | 5 | low | bedtime,indoors | None | pse,cl | polish
@@ -36,6 +37,7 @@ why: A gentle back massage rhyme calms a busy body and is a lovely wind-down bef
 easier: Do it on their tummy while they lie down.
 harder: Let them do it on your back while you say the words.
 pl: pajączek, deszcz, słoneczko (spider, rain, sun)
+pn: Some say "Spadł wielki deszczyk" (a little rain); the actions are the same.
 
 ## Wlazł kotek na płotek
 18-48 | 5 | low | indoors,onthego,bedtime | None | cl,ead | polish
@@ -192,7 +194,8 @@ pl: Gdzie jest nos? (Where's your nose?)
 - Your toddler walks underneath, round and round, while you sing.
 - On "a jednego zatrzymamy" gently lower your arms to catch them, then cuddle.
 words: Jawor, jawor, jaworowi ludzie, / co wy tu robicie? / Budujemy mosty / dla pana starosty. / Tysiąc koni przepuszczamy, / a jednego zatrzymamy!
-en: Sycamore people, what are you doing here? We're building bridges for the mayor. We let a thousand horses through, but we'll stop one!
+en: Sycamore people, what are you doing here? We're building bridges for the starosta (an old-time district governor). We let a thousand horses through, but we'll stop one!
+pn: Many groups carry on: "Pierwsze przepustne, drugie kapustne, trzecie darowane, czwarte zatrzymane!"
 why: Anticipation games like this build trust and lots of laughs; the "catch" is always a cuddle.
 easier: One grown-up makes an arch against a wall or sofa.
 harder: Add siblings and take turns being the bridge.
@@ -233,6 +236,7 @@ why: The pause before each body part invites them to point or say the word.
 easier: Do two or three parts only.
 harder: Pause and let them say the body part.
 pl: noga, palec, dłoń, głowa, nos (leg, finger, hand, head, nose)
+pn: A common variant has "Leci, leci sowa, a tu… głowa!" (an owl) and "Leci, leci kos" for the last line. Some say the child's name in each pause.
 
 ## Lata mucha koło ucha
 18-48 | 5 | low | indoors,bath,onthego | None | cl,pse | polish

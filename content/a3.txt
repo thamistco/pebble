@@ -144,7 +144,8 @@ why: Warm, predictable routines help toddlers feel safe and settle for sleep.
 easier: Just the cuddle.
 harder: Let them wrap teddy too.
 pl: ręcznik, ciepło (towel, warm)
-plp: Przytulas! (Cuddle!)
+plp: Chodź, przytulę cię! (Come here, cuddle!)
+pn: Many families also say the cosier, colloquial "Przytulas!" (a cuddle).
 
 ## Goodnight, room
 18-36 | 5 | low | bedtime | None | cl,pse |
@@ -250,7 +251,7 @@ easier: Poke holes with a finger.
 harder: Make a snake, a cat, a dinner plate.
 safety: Watch that it doesn't get eaten; homemade dough is very salty.
 pl: oczy, nos, buzia (eyes, nose, mouth)
-plp: Zrobimy buzię? (Shall we make a face?)
+plp: Ulepimy buźkę? (Shall we make a face?)
 
 ## Stack and crash
 18-36 | 10 | med | indoors | Blocks, cups or tins | math,pd,pse |
@@ -415,7 +416,8 @@ easier: Look from the doorstep and touch the frost.
 harder: Bring some snow indoors in a tub and watch it melt.
 safety: Keep hands warm and avoid icy paths.
 pl: śnieg, zimno (snow, cold)
-plp: Zimno! Załóż rękawiczki. (Cold! Put your gloves on.)
+plp: Zimno! Włóż rękawiczki. (Cold! Put your gloves on.)
+pn: "Załóż rękawiczki" is very common in everyday speech too.
 
 ## Autumn conker hunt
 24-48 | 20 | med | outdoors | A bag | utw,math | autumn
@@ -428,7 +430,7 @@ easier: Just collect leaves and sticks.
 harder: Sort by size.
 safety: Conkers are not food and are a choking hazard for under 3s. Supervise and keep them out of reach at home.
 pl: kasztan (conker)
-plp: Masz kasztana! (You've got a conker!)
+plp: Jaki ładny kasztan! (What a lovely conker!)
 
 ## Spring buds and birds
 24-48 | 20 | med | outdoors | None | utw,cl | spring

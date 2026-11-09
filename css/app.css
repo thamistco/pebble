@@ -260,8 +260,6 @@ textarea.input{padding:12px 14px;min-height:84px;resize:vertical}
 .tab[aria-current="page"] .tab-ic{background:var(--brand-soft);color:var(--brand-soft-ink)}
 body.sheet-open .tabbar{visibility:hidden}
 
-#toast{width:max-content;position:fixed;left:50%;bottom:calc(var(--tab-h) + env(safe-area-inset-bottom) + 16px);transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:12px 18px;border-radius:14px;font-size:var(--fs-s);font-weight:600;opacity:0;pointer-events:none;transition:all .25s;z-index:60;max-width:calc(100% - 40px);text-align:center}
-#toast.show{opacity:1;transform:translate(-50%,0)}
 
 @media (max-width:359px){
   :root{--pad:16px}
@@ -278,7 +276,6 @@ body.sheet-open .tabbar{visibility:hidden}
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{transition:none!important;animation:none!important;scroll-behavior:auto!important}
 }
-body.sheet-open #toast{bottom:calc(100px + env(safe-area-inset-bottom))}
 
 /* ---------- v2: pictures, video link, Polish, install ---------- */
 .card .thumb{width:84px;height:63px;flex:none;border-radius:12px;object-fit:cover;background:var(--tone);aspect-ratio:4/3}
@@ -331,16 +328,23 @@ input[type="date"]::-webkit-date-and-time-value{text-align:left}
 @container (max-width:17em){ .quick{grid-template-columns:1fr} }
 .tab{min-width:0;font-size:min(var(--fs-xs),15px)}
 .tab-ic{max-width:100%}
-#toast{overflow-wrap:anywhere}
 .list{container-type:inline-size}
 @container (max-width:15em){ .card{flex-wrap:wrap} .card .body{flex:1 1 calc(100% - 40px)} .card .thumb{width:100%;height:auto} }
 .chip[role="radio"][aria-checked="true"]{background:var(--ink);color:var(--bg)}
-#toast{visibility:hidden}
-#toast.show{visibility:visible}
 .sheet-foot{flex-wrap:wrap}
 .sheet-foot .btn{min-width:0}
 .scrim:not(.open){pointer-events:none}
 .vary{grid-template-columns:repeat(auto-fit,minmax(min(100%,9.5em),1fr))}
 .vary div{min-width:0;overflow-wrap:break-word}
-#toast{transition:transform .25s ease,opacity 0s linear .25s,visibility 0s linear .25s}
-#toast.show{transition:transform .25s ease,opacity 0s,visibility 0s}
+/* v2.2 toast: a status strip docked to the top edge of the tab bar (taps pass through it), or in the flow above a sheet's buttons */
+#toast{position:fixed;left:0;right:0;bottom:var(--toast-b,calc(var(--tab-h) + env(safe-area-inset-bottom)));z-index:29;max-width:560px;margin:0 auto;padding:9px var(--pad);background:color-mix(in srgb,var(--bg) 96%,transparent);-webkit-backdrop-filter:saturate(1.4) blur(14px);backdrop-filter:saturate(1.4) blur(14px);box-shadow:0 -1px 0 var(--tone);color:var(--ink);font-size:var(--fs-s);font-weight:650;text-align:center;overflow-wrap:anywhere;pointer-events:none;visibility:hidden;opacity:0;transform:translateY(100%);transition:transform .2s ease,opacity 0s linear .2s,visibility 0s linear .2s}
+#toast.show{visibility:visible;opacity:1;transform:none;transition:transform .2s ease,opacity 0s,visibility 0s}
+#toast.no-tabs{bottom:env(safe-area-inset-bottom)}
+#toast.in-sheet{position:static;flex:none;max-width:none;margin:0;transform:none;box-shadow:0 -1px 0 var(--tone);background:var(--tone);pointer-events:auto;cursor:pointer;display:none;padding:8px var(--pad);-webkit-backdrop-filter:none;backdrop-filter:none}
+#toast.in-sheet.show{display:block}
+body.toast-on main{padding-bottom:calc(var(--tab-h) + env(safe-area-inset-bottom) + 72px)}
+@media (prefers-reduced-motion: reduce){#toast,#toast.show{transition:none}}
+/* v2.2 stacked sheets: only the top sheet is on screen; the one below slides away and returns when the top one closes */
+.sheet.open.under{transform:translateY(100%);visibility:hidden;transition:transform .28s cubic-bezier(.2,.8,.2,1),visibility 0s linear .28s}
+.scrim.stacked{background:transparent}
+.pl-note{margin-top:8px;font-size:var(--fs-xs,.8rem);color:var(--ink-2)}
