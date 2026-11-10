@@ -5,7 +5,7 @@ const DATA = window.PEBBLE_DATA;
 const ACTS = DATA.activities;
 const BY_ID = Object.fromEntries(ACTS.map(a=>[a.id,a]));
 const KEY = 'pebble.v1';
-const VERSION = '2.2.0';
+const VERSION = '2.3.0';
 
 /* ---------- Icons (inline SVG, 24px grid, stroke) ---------- */
 const P = {
@@ -520,9 +520,14 @@ function showIosHint(){ return IOS_SAFARI && !STANDALONE() && !(S.hints&&S.hints
 let deferredPrompt=null;
 window.addEventListener('beforeinstallprompt', e=>{ e.preventDefault(); deferredPrompt=e; });
 window.addEventListener('appinstalled', ()=>{ deferredPrompt=null; });
+/* Android: the Pebble app (APK) is a WebView of this site that adds ' PebbleAndroid/' to its user agent */
+const IN_APK = /PebbleAndroid\//.test(navigator.userAgent) || !!window.PebbleNative;
+const IS_ANDROID = /Android/i.test(navigator.userAgent) && !IN_APK;
+const APK_URL = 'download/pebble.apk';
 function installRowHTML(){
-  if(STANDALONE()) return '';
+  if(IN_APK || STANDALONE()) return '';
   if(deferredPrompt) return `<div class="d-sec" id="install-row"><h3>Install</h3><div class="group"><button class="row-btn" data-act="install">${ic('plus')}Install Pebble on this phone</button></div><p class="fine">Opens full-screen from your home screen and works offline.</p></div>`;
+  if(IS_ANDROID) return `<div class="d-sec" id="install-row"><h3>Install</h3><div class="group"><a class="row-btn" href="${APK_URL}" download="Pebble.apk">${ic('download')}Install on Android: Download app (APK)</a></div><p class="fine">Open the downloaded file to install. If Android asks, allow Chrome to install unknown apps.</p><p class="fine">Or add it from Chrome: menu <b aria-label="More options">⋮</b> → <b>Add to home screen</b> → <b>Install</b>.</p></div>`;
   if(IS_IOS) return `<div class="d-sec"><h3>Install</h3><p class="small">In Safari, tap <span class="share-glyph" aria-label="Share">${ic('share')}</span> Share, then <b>Add to Home Screen</b>.</p></div>`;
   return '';
 }
@@ -633,7 +638,11 @@ document.addEventListener('change', e=>{
     r.readAsText(file); }
 });
 function exportData(){
-  const blob=new Blob([JSON.stringify({app:'pebble', version:VERSION, exported:new Date().toISOString(), state:S},null,2)],{type:'application/json'});
+  const json=JSON.stringify({app:'pebble', version:VERSION, exported:new Date().toISOString(), state:S},null,2);
+  if(window.PebbleNative && PebbleNative.saveFile){   /* Android app: a WebView can't download blob: links */
+    let ok=false; try{ ok=PebbleNative.saveFile(`pebble-backup-${dkey()}.json`, json, 'application/json'); }catch(_){}
+    if(ok) toast('Backup saved to Downloads'); return; }
+  const blob=new Blob([json],{type:'application/json'});
   const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download=`pebble-backup-${dkey()}.json`; document.body.append(a); a.click(); a.remove(); setTimeout(()=>URL.revokeObjectURL(url),1000); toast('Backup downloaded');
 }
 function filterSheetHTML(){
